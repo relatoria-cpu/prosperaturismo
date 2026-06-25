@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnóstico Único | Prospera Turismo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --azul-principal: #092040;
+      --azul-secundario: #00B7D7;
+      --amarelo: #ECC203;
+      --cinza-neutro: #EFF1F3;
+      --azul-escuro: #021738;
+      --branco: #FFFFFF;
+      --vermelho-erro: #ef4444;
+      --verde-sucesso: #10b981;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--cinza-neutro);
+      color: var(--azul-escuro);
+    }
+    .cabecalho {
+      background: var(--azul-principal);
+      color: var(--branco);
+      padding: 24px 30px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .cabecalho-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .cabecalho-logos img {
+      height: 52px;
+      width: auto;
+      object-fit: contain;
+    }
+    .cabecalho-logos img.logo-central {
+      height: 64px;
+    }
+    .cabecalho-textos {
+      text-align: center;
+    }
+    .cabecalho-textos h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .cabecalho-textos p {
+      font-size: 14px;
+      opacity: 0.85;
+    }
+    .cabecalho-textos .territarios {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--amarelo);
+      margin-top: 6px;
+    }
+    main {
+      max-width: 920px;
+      margin: 28px auto;
+      padding: 0 16px 60px;
+    }
+    .aviso-sucesso {
+      background: var(--verde-sucesso);
+      color: var(--branco);
+      padding: 18px 24px;
+      border-radius: 8px;
+      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .aviso-sucesso.visivel { display: block; }
+    .aviso-erro {
+      background: var(--vermelho-erro);
+      color: var(--branco);
+      padding: 14px 20px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 14px;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .aviso-erro.visivel { display: block; }
+    .secao {
+      background: var(--branco);
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+    .secao-titulo {
+      background: var(--azul-principal);
+      color: var(--branco);
+      padding: 14px 24px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      border-left: 6px solid var(--azul-secundario);
+      letter-spacing: 0.3px;
+    }
+    .secao-corpo {
+      padding: 24px;
+    }
+    .subsecao-titulo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--azul-secundario);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 20px 0 14px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--cinza-neutro);
+    }
+    .subsecao-titulo:first-child { margin-top: 0; }
+    .campo {
+      margin-bottom: 18px;
+    }
+    .campo label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--azul-escuro);
+    }
+    .campo label .obrig {
+      color: var(--vermelho-erro);
+      margin-left: 2px;
+    }
+    .campo input[type="text"],
+    .campo input[type="date"],
+    .campo input[type="time"],
+    .campo input[type="email"],
+    .campo input[type="number"],
+    .campo input[type="tel"],
+    .campo select,
+    .campo textarea {
+      width: 100%;
+      padding: 11px 13px;
+      font-size: 14px;
+      font-family: 'Open Sans', sans-serif;
+      border: 2px solid #d1d5db;
+      border-radius: 6px;
+      background: var(--branco);
+      color: var(--azul-escuro);
+      transition: border-color 0.2s;
+    }
+    .campo input:focus,
+    .campo select:focus,
+    .campo textarea:focus {
+      outline: none;
+      border-color: var(--azul-secundario);
+    }
+    .campo input.erro,
+    .campo select.erro,
+    .campo textarea.erro {
+      border-color: var(--vermelho-erro);
+    }
+    .campo textarea { min-height: 90px; resize: vertical; }
+    .msg-erro {
+      color: var(--vermelho-erro);
+      font-size: 12px;
+      margin-top: 4px;
+      display: none;
+    }
+    .msg-erro.visivel { display: block; }
+    .texto-ajuda {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 4px;
+      font-style: italic;
+    }
+    .grade-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grade-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .grade-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+    @media (max-width: 640px) {
+      .grade-2, .grade-3, .grade-4 { grid-template-columns: 1fr; }
+    }
+    .grupo-radio {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 4px;
+    }
+    .opcao-radio {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+    }
+    .opcao-radio input[type="radio"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--azul-secundario);
+      cursor: pointer;
+    }
+    .opcao-radio span {
+      font-size: 14px;
+      color: var(--azul-escuro);
+    }
+    .grupo-checkbox {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .opcao-checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      cursor: pointer;
+      min-width: 200px;
+    }
+    @media (max-width: 640px) { .opcao-checkbox { min-width: 100%; } }
+    .opcao-checkbox input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      margin-top: 1px;
+      accent-color: var(--azul-secundario);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .opcao-checkbox span {
+      font-size: 14px;
+      color: var(--azul-escuro);
+      line-height: 1.4;
+    }
+    .escala-likert {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .escala-likert span {
+      font-size: 13px;
+      color: #6b7280;
+      font-style: italic;
+    }
+    .escala-likert .opcoes-escala {
+      display: flex;
+      gap: 10px;
+    }
+    .escala-likert .opcao-escala {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .escala-likert .opcao-escala input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--azul-secundario);
+    }
+    .escala-likert .opcao-escala label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--azul-escuro);
+    }
+    .bloco-condicional { display: none; }
+    .bloco-condicional.visivel { display: block; }
+    .aviso-confidencial {
+      background: var(--cinza-neutro);
+      border-left: 4px solid var(--azul-secundario);
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #374151;
+      border-radius: 0 6px 6px 0;
+      margin-bottom: 16px;
+    }
+    .btn-enviar {
+      background: var(--amarelo);
+      color: var(--azul-principal);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 16px 32px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 8px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-enviar:hover { background: #d4a903; transform: translateY(-1px); }
+    .btn-enviar:disabled { background: #9ca3af; cursor: not-allowed; transform: none; }
+    .rodape {
+      background: var(--azul-principal);
+      color: var(--branco);
+      text-align: center;
+      padding: 24px;
+      font-size: 13px;
+      margin-top: 60px;
+      opacity: 0.9;
+    }
+    .separador {
+      height: 1px;
+      background: var(--cinza-neutro);
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+
+<header class="cabecalho">
+  <div class="cabecalho-logos">
+    <img src="assets/logo-instituto-br.png" alt="Instituto BR Arte" title="Instituto BR Arte">
+    <img src="assets/logo-prospera-turismo.png" alt="Prospera Turismo" title="Prospera Turismo" class="logo-central">
+    <img src="assets/logo-prefeitura-rio.png" alt="Prefeitura do Rio" title="Prefeitura do Rio">
+  </div>
+  <div class="cabecalho-textos">
+    <h1>Diagnóstico Único - Prospera Turismo</h1>
+    <p>Diagnóstico Empresarial e Diagnóstico de Turismo Comunitário</p>
+    <div class="territarios">Rocinha - Vidigal - Cantagalo - Complexo da Maré - Complexo do Alemão - Mangueira - Chapéu Mangueira - Santa Marta</div>
+  </div>
+</header>
+
+<main>
+  <div class="aviso-sucesso" id="avisoSucesso">
+    Formulário enviado com sucesso. O diagnóstico foi registrado na planilha.
+  </div>
+  <div class="aviso-erro" id="avisoErro">
+    Erro ao enviar o formulário. Verifique sua conexão e tente novamente.
+  </div>
+
+  <form id="formulario" novalidate>
+
+    <!-- ============================================================ -->
+    <!-- SECAO 1 - DADOS DA COLETA -->
+    <!-- ============================================================ -->
+    <div class="secao">
+      <div class="secao-titulo">Seção 1 - Dados da Coleta</div>
+      <div class="secao-corpo">
+
+        <div class="grade-2">
+          <div class="campo">
+            <label for="coleta_data">Data de aplicação<span class="obrig">*</span></label>
+            <input type="date" id="coleta_data" name="coleta_data" required>
+            <div class="msg-erro" id="err-coleta_data">Campo obrigatório.</div>
+          </div>
+          <div class="campo">
+            <label>Tipo de coleta<span class="obrig">*</span></label>
+            <div class="grupo-radio">
+              <label class="opcao-radio">
+                <input type="radio" name="coleta_tipo" value="Presencial" required>
+                <span>Presencial</span>
+              </label>
+              <label class="opcao-radio">
+                <input type="radio" name="coleta_tipo" value="Online">
+                <span>Online</span>
+              </label>
+            </div>
+            <div class="msg-erro" id="err-coleta_tipo">Selecione o tipo de coleta.</div>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="coleta_territorio">Território pesquisado<span class="obrig">*</span></label>
+          <select id="coleta_territorio" name="coleta_territorio" required>
+            <option value="">Selecione o território</option>
+            <option value="Rocinha">Rocinha</option>
+            <option value="Vidigal">Vidigal</option>
+            <option value="Cantagalo">Cantagalo</option>
+            <option value="Complexo da Mare">Complexo da Maré</option>
+            <option value="Complexo do Alemao">Complexo do Alemão</option>
+            <option value="Mangueira">Mangueira</option>
+            <option value="Chapeu Mangueira">Chapéu Mangueira</option>
+            <option value="Santa Marta">Santa Marta</option>
+          </select>
+          <div class="msg-erro" id="err-coleta_territorio">Selecione o território.</div>
+        </div>
+
+        <div class="campo">
+          <label for="coleta_entrevistador">Nome do entrevistador(a)<span class="obrig">*</span></label>
+          <input type="text" id="coleta_entrevistador" name="coleta_entrevistador" required>
+          <div class="msg-erro" id="err-coleta_entrevistador">Campo obrigatório.</div>
+        </div>
+
+        <div class="grade-2">
+          <div class="campo">
+            <label for="coleta_inicio">Horário de início<span class="obrig">*</span></label>
+            <input type="time" id="coleta_inicio" name="coleta_inicio" required>
+            <div class="msg-erro" id="err-coleta_inicio">Campo obrigatório.</div>
+          </div>
+          <div class="campo">
+            <label for="coleta_termino">Horário de término</label>
+            <input type="time" id="coleta_termino" name="coleta_termino">
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="coleta_observacoes">Observações do entrevistador(a)</label>
+          <textarea id="coleta_observacoes" name="coleta_observacoes" placeholder="Anotações relevantes sobre o contexto da coleta (opcional)"></textarea>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SECAO 2 - PERFIL DO EMPREENDEDOR -->
+    <!-- ============================================================ -->
+    <div class="secao">
+      <div class="secao-titulo">Seção 2 - Perfil do Empreendedor</div>
+      <div class="secao-corpo">
+
+        <div class="campo">
+          <label for="pessoa_nome_iniciativa">Nome do empreendimento ou iniciativa<span class="obrig">*</span></label>
+          <input type="text" id="pessoa_nome_iniciativa" name="pessoa_nome_iniciativa" required>
+          <div class="msg-erro" id="err-pessoa_nome_iniciativa">Campo obrigatório.</div>
+        </div>
+
+        <div class="campo">
+          <label for="pessoa_nome_responsavel">Nome do responsável<span class="obrig">*</span></label>
+          <input type="text" id="pessoa_nome_responsavel" name="pessoa_nome_responsavel" required>
+          <div class="msg-erro" id="err-pessoa_nome_responsavel">Campo obrigatório.</div>
+        </div>
+
+        <div class="grade-2">
+          <div class="campo">
+            <label for="pessoa_genero">Como se identifica em termos de gênero<span class="obrig">*</span></label>
+            <select id="pessoa_genero" name="pessoa_genero" required onchange="mostrarOutroGenero(this.value)">
+              <option value="">Selecione</option>
+              <option value="Cisgênero">Cisgênero</option>
+              <option value="Transgênero">Transgênero</option>
+              <option value="Não binário">Não binário</option>
+              <option value="Prefere não responder">Prefere não responder</option>
+              <option value="Outro">Outro</option>
+            </select>
+            <div class="msg-erro" id="err-pessoa_genero">Campo obrigatório.</div>
+          </div>
+          <div class="campo bloco-condicional" id="bloco-pessoa_genero_outro">
+            <label for="pessoa_genero_outro">Como se identifica (especifique)<span class="obrig">*</span></label>
+            <input type="text" id="pessoa_genero_outro" name="pessoa_genero_outro">
+          </div>
+        </div>
+
+        <div class="grade-2">
+          <div class="campo">
+            <label for="pessoa_data_nascimento">Data de nascimento<span class="obrig">*</span></label>
+            <input type="date" id="pessoa_data_nascimento" name="pessoa_data_nascimento" required onchange="calcularIdade(this.value)">
+            <div class="msg-erro" id="err-pessoa_data_nascimento">Campo obrigatório.</div>
+          </div>
+          <div class="campo">
+            <label for="pessoa_idade">Idade (anos completos)<span class="obrig">*</span></label>
+            <input type="number" id="pessoa_idade" name="pessoa_idade" min="0" max="120" required>
+            <div class="msg-erro" id="err-pessoa_idade">Informe a idade.</div>
+            <p class="texto-ajuda">Preenchido automaticamente ao informar a data de nascimento. Pode ser editado.</p>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="pessoa_escolaridade">Escolaridade<span class="obrig">*</span></label>
+          <select id="pessoa_escolaridade" name="pessoa_escolaridade" required>
+            <option value="">Selecione</option>
+            <option value="Ensino Fundamental">Ensino Fundamental</option>
+            <option value="Ensino Médio">Ensino Médio</option>
+            <option value="Ensino Superior">Ensino Superior</option>
+            <option value="Pós-graduação">Pós-graduação</option>
+            <option value="Outro">Outro</option>
+          </select>
+          <div class="msg-erro" id="err-pessoa_escolaridade">Campo obrigatório.</div>
+        </div>
+
+        <div class="grade-2">
+          <div class="campo">
+            <label for="pessoa_cor_raca">Cor ou raça<span class="obrig">*</span></label>
+            <select id="pessoa_cor_raca" name="pessoa_cor_raca" required onchange="mostrarOutraRaca(this.value)">
+              <option value="">Selecione</option>
+              <option value="Branca">Branca</option>
+              <option value="Parda">Parda</option>
+              <option value="Preta">Preta</option>
+              <option value="Indígena">Indígena</option>
+              <option value="Prefere não responder">Prefere não responder</option>
+              <option value="Outra">Outra</option>
+            </select>
+            <div class="msg-erro" id="err-pessoa_cor_raca">Campo obrigatório.</div>
+          </div>
+          <div class="campo bloco-condicional" id="bloco-pessoa_cor_raca_outro">
+            <label for="pessoa_cor_raca_outro">Cor ou raça (especifique)</label>
+            <input type="text" id="pessoa_cor_raca_outro" name="pessoa_cor_raca_outro">
+          </div>
+        </div>
+
+        <div class="campo">
+          <label>Você mora na comunidade onde atua<span class="obrig">*</span></label>
+          <div class="grupo-radio">
+            <label class="opcao-radio">
+              <input type="radio" name="pessoa_morador" value="Sim, moro nesta comunidade" required>
+              <span>Sim, moro nesta comunidade</span>
+            </label>
+            <label class="opcao-radio">
+              <input type="radio" name="pessoa_morador" value="Sou de outra comunidade do Rio de Janeiro">
+              <span>Sou de outra comunidade do Rio de Janeiro</span>
+            </label>
+            <label class="opcao-radio">
+              <input type="radio" name="pessoa_morador" value="Sou de outro município/estado">
+              <span>Sou de outro município ou estado</span>
+            </label>
+          </div>
+          <div class="msg-erro" id="err-pessoa_morador">Selecione uma opção.</div>
+        </div>
+
+        <div class="campo">
+          <label for="pessoa_tempo_territorio">Há quanto tempo mora ou atua nesta comunidade<span class="obrig">*</span></label>
+          <select id="pessoa_tempo_territorio" name="pessoa_tempo_territorio" required>
+            <option value="">Selecione</option>
+            <option value="Menos de 2 anos">Menos de 2 anos</option>
+            <option value="2 a 5 anos">2 a 5 anos</option>
+            <option value="6 a 10 anos">6 a 10 anos</option>
+            <option value="Mais de 10 anos">Mais de 10 anos</option>
+          </select>
+          <div class="msg-erro" id="err-pessoa_tempo_territorio">Campo obrigatório.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SECAO 3 - PERFIL SOCIOECONOMICO -->
+    <!-- ============================================================ -->
+    <div class="secao">
+      <div class="secao-titulo">Seção 3 - Perfil Socioeconômico</div>
+      <div class="secao-corpo">
+        <div class="aviso-confidencial">
+          Esta informação é usada apenas para leitura socioeconômica do projeto. Ela não define aprovação, exclusão ou prioridade automática. O preenchimento é opcional.
+        </div>
+        <div class="campo">
+          <label for="socio_beneficio">Você ou alguém do domicílio está inscrito no CadÚnico ou recebe algum benefício social</label>
+          <select id="socio_beneficio" name="socio_beneficio">
+            <option value="">Prefere não informar / Não se aplica</option>
+            <option value="Sim, Bolsa Família">Sim, Bolsa Família</option>
+            <option value="Sim, BPC">Sim, BPC</option>
+            <option value="Sim, outro benefício social">Sim, outro benefício social</option>
+            <option value="Inscrito no CadÚnico sem benefício">Inscrito no CadÚnico, mas não recebo benefício no momento</option>
+            <option value="Não">Não</option>
+            <option value="Prefere não responder">Prefere não responder</option>
+          </select>
+          <p class="texto-ajuda">Não informe número do NIS, valor recebido ou comprovante. Apenas a categoria é suficiente.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SECAO 4 - CONTATO E ENDERECO -->
+    <!-- ============================================================ -->
+    <div class="secao">
+      <div class="secao-titulo">Seção 4 - Contato e Endereço</div>
+      <div class="secao-corpo">
+
+        <div class="subsecao-titulo">Contato</div>
+        <div class="grade-2">
+          <div class="campo">
+            <label for="contato_telefone">Telefone<span class="obrig">*</span></label>
+            <input type="tel" id="contato_telefone" name="contato_telefone" placeholder="(21) 99999-9999" required>
+            <div class="msg-erro" id="err-contato_telefone">Campo obrigatório.</div>
+          </div>
+          <div class="campo">
+            <label for="contato_whatsapp">WhatsApp</label>
+            <input type="tel" id="contato_whatsapp" name="contato_whatsapp" placeholder="(21) 99999-9999">
+          </div>
+        </div>
+        <div class="grade-2">
+          <div class="campo">
+            <label for="contato_email">E-mail</label>
+            <input type="email" id="contato_email" name="contato_email">
+          </div>
+          <div class="campo">
+            <label for="contato_rede_social">Rede social (coloque o @)</label>
+            <input type="text" id="contato_rede_social" name="contato_rede_social" placeholder="@nomedoperfil">
+          </div>
+        </div>
+
+        <div class="separador"></div>
+        <div class="subsecao-titulo">Endereço</div>
+
+        <div class="grade-3">
+          <div class="campo">
+            <label for="endereco_tipo_logradouro">Tipo de logradouro<span class="obrig">*</span></label>
+            <select id="endereco_tipo_logradouro" name="endereco_tipo_logradouro" required>
+              <option value="">Selecione</option>
+              <option value="Rua">Rua</option>
+              <option value="Avenida">Avenida</option>
+              <option value="Travessa">Travessa</option>
+              <option value="Estrada">Estrada</option>
+              <option value="Praça">Praça</option>
+              <option value="Alameda">Alameda</option>
+              <option value="Outro">Outro</option>
+            </select>
+            <div class="msg-erro" id="err-endereco_tipo_logradouro">Campo obrigatório.</div>
+          </div>
+          <div class="campo" style="grid-column: span 2;">
+            <label for="endereco_logradouro">Logradouro<span class="obrig">*</span></label>
+            <input type="text" id="endereco_logradouro" name="endereco_logradouro" required>
+            <div class="msg-erro" id="err-endereco_logradouro">Campo obrigatório.</div>
+          </div>
+        </div>
+
+        <div class="grade-3">
+          <div class="campo">
+            <label for="endereco_numero">Número<span class="obrig">*</span></label>
+            <input type="text" id="endereco_numero" name="endereco_numero" required>
+            <div class="msg-erro" id="err-endereco_numero">Campo obrigatório.</div>
+          </div>
+          <div class="campo" style="grid-column: span 2;">
+            <label for="endereco_complemento">Complemento</label>
+            <input type="text" id="endereco_complemento" name="endereco_complemento" placeholder="Apto, bloco, casa, etc.">
+          </div>
+        </div>
+
+        <div class="grade-4">
+          <div class="campo">
+            <label for="endereco_bairro">Bairro / Comunidade<span class="obrig">*</span></label>
+            <input type="text" id="endereco_bairro" name="endereco_bairro" required>
+            <div class="msg-erro" id="err-endereco_bairro">Campo obrigatório.</div>
+          </div>
+          <div class="campo">
+            <label for="endereco_municipio">Município<span class="obrig">*</span></label>
+            <input type="text" id="endereco_municipio" name="endereco_municipio" value="Rio de Janeiro" required>
+          </div>
+          <div class="campo">
+            <label for="endereco_uf">UF<span class="obrig">*</span></label>
+            <input type="text" id="endereco_uf" name="endereco_uf" value="RJ" maxlength="2" required>
+          </div>
+          <div class="campo">
+            <label for="endereco_cep">CEP<span class="obrig">*</span></label>
+            <input type="text" id="endereco_cep" name="endereco_cep" placeholder="00000-000" maxlength="9" required>
+            <div class="msg-erro" id="err-endereco_cep">Informe o CEP.</div>
+          </div>
+        </div>
+
+        <div class="campo" style="max-width: 300px;">
+          <label for="endereco_tipo">Tipo de endereço<span class="obrig">*</span></label>
+          <select id="endereco_tipo" name="endereco_tipo" required>
+            <option value="">Selecione</option>
+            <option value="Comercial">Comercial</option>
+            <option value="Residencial">Residencial</option>
+            <option value="Ambos">Ambos</option>
+          </select>
+          <div class="msg-erro" id="err-endereco_tipo">Campo obrigatório.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SECAO 5 - CARACTERIZACAO DO NEGOCIO -->
+    <!-- ============================================================ -->
+    <div class="secao">
+      <div class="secao-titulo">Seção 5 - Caracterização do Negócio</div>
+      <div class="secao-corpo">
+
+        <div class="campo">
+          <label for="negocio_ramo">Ramo de atividade - o que você faz<span class="obrig">*</span></label>
+          <input type="text" id="negocio_ramo" name="negocio_ramo" required>
+          <div class="msg-erro" id="err-negocio_ramo">Campo obrigatório.</div>
+        </div>
+
+        <div class="grade-2">
+          <div class="campo">
+            <label for="negocio_formalizado">O negócio é formalizado<span class="obrig">*</span></label>
+            <select id="negocio_formalizado" name="negocio_formalizado" required onchange="mostrarDocumento(this.value)">
+              <option value="">Selecione</option>
+              <option value="Não, informal/autônomo(a)">Não, informal / autônomo(a)</option>
+              <option value="Sim, MEI">Sim, MEI</option>
+              <option value="Sim, ME/EIRELI">Sim, ME / EIRELI</option>
+              <option value="Sim, Associação/Cooperativa">Sim, Associação / Cooperativa</option>
+              <option value="Sim, outro tipo">Sim, outro tipo</option>
+            </select>
+            <div class="msg-erro" id="err-negocio_formalizado">Campo obrigatório.</div>
+          </div>
+          <div class="campo">
+            <label for="negocio_inicio_atividades">Data de início das atividades<span class="obrig">*</span></label>
+            <input type="date" id="negocio_inicio_atividades" name="negocio_inicio_atividades" required>
+            <div class="msg-erro" id="err-negocio_inicio_atividades">Campo obrigatório.</div>
+          </div>
+        </div>
+
+        <div class="grade-2">
+          <div class="campo bloco-condicional" id="bloco-negocio_cpf">
+            <label for="negocio_cpf">CPF</label>
+            <input type="text" id="negocio_cpf" name="negocio_cpf" placeholder="000.000.000-00" maxlength="14">
+          </div>
+          <div class="campo bloco-condicional" id="bloco-negocio_cnpj">
+            <label for="negocio_cnpj">CNPJ</label>
+            <input type="text" id="negocio_cnpj" name="negocio_cnpj" placeholder="00.000.000/0000-00" maxlength="18">
+          </div>
+        </div>
+
+        <div class="grade-2">
+          <div class="campo">
+            <label for="negocio_qtd_pessoas">Quantas pessoas trabalham no negócio (incluindo você)<span class="obrig">*</span></label>
+            <input type="number" id="negocio_qtd_pessoas" name="negocio_qtd_pessoas" min="1" required>
+            <div class="msg-erro" id="err-negocio_qtd_pessoas">Informe a quantidade.</div>
+          </div>
+          <div class="campo">
+            <label>O negócio é a principal fonte de renda<span class="obrig">*</span></label>
+            <div class="grupo-radio">
+              <label class="opcao-radio">
+                <input type="radio" name="negocio_fonte_renda" value="Sim" required>
+                <span>Sim</span>
+              </label>
+              <label class="opcao-radio">
+                <input type="radio" name="negocio_fonte_renda" value="Não">
+                <span>Não</span>
+              </label>
+            </div>
+            <div class="msg-erro" id="err-negocio_fonte_renda">Selecione uma opção.</div>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="negocio_motivo">Por que você decidiu abrir este negócio<span class="obrig">*</span></label>
+          <textarea id="negocio_motivo" name="negocio_motivo" required></textarea>
+          <div class="msg-erro" id="err-negocio_motivo">Campo obrigatório.</div>
+        </div>
+
+        <div class="campo">
+          <label for="negocio_descricao">Descreva o negócio em poucas palavras<span class="obrig">*</span></label>
+          <textarea id="negocio_descricao" name="negocio_descricao" required></textarea>
+          <div class="msg-erro" id="err-negocio_descricao">Campo obrigatório.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SECAO 6 - DIAGNOSTICO EMPRESARIAL -->
+    <!-- ============================================================ -->
+    <div class="secao">
+      <div class="secao-titulo">Seção 6 - Diagnóstico Empresarial</div>
+      <div class="secao-corpo">
+
+        <div class="subsecao-titulo">Gestão Financeira</div>
+
+        <div class="campo">
+          <label for="emp_organiza_dinheiro">Como você organiza o dinheiro que entra e sai do negócio<span class="obrig">*</span></label>
+          <textarea id="emp_organiza_dinheiro" name="emp_organiza_dinheiro" required></textarea>
+          <div class="msg-erro" id="err-emp_organiza_dinheiro">Campo obrigatório.</div>
+        </div>
+
+        <div class="grade-2">
+          <div class="campo">
+            <label for="emp_separa_pessoal">Você separa o dinheiro do negócio do dinheiro pessoal<span class="obrig">*</span></label>
+            <select id="emp_separa_pessoal" name="emp_separa_pessoal" required>
+              <option value="">Selecione</option>
+              <option value="Sim">Sim</option>
+              <option value="Não">Não</option>
+              <option value="Às vezes">Às vezes</option>
+            </select>
+            <div class="msg-erro" id="err-emp_separa_pessoal">Campo obrigatório.</div>
+          </div>
+          <div class="campo">
+            <label for="emp_sabe_lucro">Você sabe quanto ganhou no mês passado<span class="obrig">*</span></label>
+            <select id="emp_sabe_lucro" name="emp_sabe_lucro" required>
+              <option value="">Selecione</option>
+              <option value="Sim">Sim</option>
+              <option value="Não">Não</option>
+              <option value="Aproximadamente">Aproximadamente</option>
+            </select>
+            <div class="msg-erro" id="err-emp_sabe_lucro">Campo obrigatório.</div>
+          </div>
+        </div>
+
+        <div class="grade-2">
+          <div class="campo">
+            <label>O negócio tem conta bancária própria<span class="obrig">*</span></label>
+            <div class="grupo-radio">
+              <label class="opcao-radio">
+                <input type="radio" name="emp_conta_bancaria" value="Sim" required>
+                <span>Sim</span>
+              </label>
+              <label class="opcao-radio">
+                <input type="radio" name="emp_conta_bancaria" value="Não">
+                <span>Não</span>
+              </label>
+            </div>
+            <div class="msg-erro" id="err-emp_conta_bancaria">Selecione uma opção.</div>
+          </div>
+          <div class="campo">
+            <label>Você já acessou crédito formal para o negócio<span class="obrig">*</span></label>
+            <div class="grupo-radio">
+              <label class="opcao-radio">
+                <input type="radio" name="emp_credito_formal" value="Sim" required>
+                <span>Sim</span>
+              </label>
+              <label class="opcao-radio">
+                <input type="radio" name="emp_credito_formal" value="Não">
+                <span>Não</span>
+              </label>
+            </div>
+            <div class="msg-erro" id="err-emp_credito_formal">Selecione uma opção.</div>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="emp_preocupacao_financeira">O que mais te preocupa em relação ao dinheiro do negócio<span class="obrig">*</span></label>
+          <textarea id="emp_preocupacao_financeira" name="emp_preocupacao_financeira" required></textarea>
+          <div class="msg-erro" id="err-emp_preocupacao_financeira">Campo obrigatório.</div>
+        </div>
+
+        <div class="separador"></div>
+        <div class="subsecao-titulo">Operação</div>
+
+        <div class="campo">
+          <label for="emp_quem_ajuda">Quem te ajuda no negócio (família, amigos, contratados)<span class="obrig">*</span></label>
+          <textarea id="emp_quem_ajuda" name="emp_quem_ajuda" required></textarea>
+          <div class="msg-erro" id="err-emp_quem_ajuda">Campo obrigatório.</div>
+        </div>
+
+        <div class="campo">
+          <label for="emp_materiais">Materiais e equipamentos utilizados<span class="obrig">*</span></label>
+          <textarea id="emp_materiais" name="emp_materiais" required></textarea>
+          <div class="msg-erro" id="err-emp_materiais">Campo obrigatório.</div>
+        </div>
+
+        <div class="campo">
+          <label for="emp_tecnologia">Tecnologias utilizadas (celular, internet, maquininha, etc.)<span class="obrig">*</span></label>
+          <textarea id="emp_tecnologia" name="emp_tecnologia" required></textarea>
+          <div class="msg-erro" id="err-emp_tecnologia">Campo obrigatório.</div>
+        </div>
+
+        <div class="campo">
+          <label for="emp_dificuldades">Existe algo que dificulta o trabalho no dia a dia? Qual?<span class="obrig">*</span></label>
+          <textarea id="emp_dificuldades" name="emp_dificuldades" required></textarea>
+          <div class="msg-erro" id="err-emp_dificuldades">Campo obrigatório.</div>
+        </div>
+
+        <div class="separador"></div>
+        <div class="subsecao-titulo">Marketing e Vendas</div>
+
+        <div class="campo">
+          <label for="emp_como_divulga">Como você faz para as pessoas conhecerem o negócio<span class="obrig">*</span></label>
+          <textarea id="emp_como_divulga" name="emp_como_divulga" required></textarea>
+          <div class="msg-erro" id="err-emp_como_divulga">Campo obrigatório.</div>
+        </div>
+
+        <div class="campo">
+          <label for="emp_onde_vende">Onde você vende seus produtos ou serviços<span class="obrig">*</span></label>
+          <input type="text" id="emp_onde_vende" name="emp_onde_vende" required>
+          <div class="msg-erro" id="err-emp_onde_vende">Campo obrigatório.</div>
+        </div>
+
+        <div class="campo">
+          <label>Você usa redes sociais para o negócio<span class="obrig">*</span></label>
+          <div class="grupo-radio">
+            <label class="opcao-radio">
+              <input type="radio" name="emp_usa_redes" value="Sim" required onchange="mostrarRedesEmp('Sim')">
+              <span>Sim</span>
+            </label>
+            <label class="opcao-radio">
+              <input type="radio" name="emp_usa_redes" value="Não" onchange="mostrarRedesEmp('Não')">
+              <span>Não</span>
+            </label>
+          </div>
+          <div class="msg-erro" id="err-emp_usa_redes">Selecione uma opção.</div>
+        </div>
+
+        <div class="campo bloco-condicional" id="bloco-emp_quais_redes">
+          <label>Quais redes sociais você utiliza</label>
+          <div class="grupo-checkbox">
+            <label class="opcao-checkbox"><input type="checkbox" name="emp_quais_redes" value="Instagram"><span>Instagram</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="emp_quais_redes" value="WhatsApp"><span>WhatsApp</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="emp_quais_redes" value="Facebook"><span>Facebook</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="emp_quais_redes" value="TikTok"><span>TikTok</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="emp_quais_redes" value="YouTube"><span>YouTube</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="emp_quais_redes" value="Outra"><span>Outra</span></label>
+          </div>
+        </div>
+
+        <div class="grade-2">
+          <div class="campo">
+            <label for="emp_acompanha_vendas">Você acompanha quanto vende<span class="obrig">*</span></label>
+            <select id="emp_acompanha_vendas" name="emp_acompanha_vendas" required>
+              <option value="">Selecione</option>
+              <option value="Sim">Sim</option>
+              <option value="Não">Não</option>
+              <option value="Às vezes">Às vezes</option>
+            </select>
+            <div class="msg-erro" id="err-emp_acompanha_vendas">Campo obrigatório.</div>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="emp_melhoria_clientes">O que você acha que poderia melhorar para atrair mais clientes<span class="obrig">*</span></label>
+          <textarea id="emp_melhoria_clientes" name="emp_melhoria_clientes" required></textarea>
+          <div class="msg-erro" id="err-emp_melhoria_clientes">Campo obrigatório.</div>
+        </div>
+
+        <div class="separador"></div>
+        <div class="subsecao-titulo">Planejamento</div>
+
+        <div class="campo">
+          <label for="emp_objetivo">Qual é o objetivo do negócio<span class="obrig">*</span></label>
+          <textarea id="emp_objetivo" name="emp_objetivo" required></textarea>
+          <div class="msg-erro" id="err-emp_objetivo">Campo obrigatório.</div>
+        </div>
+
+        <div class="campo">
+          <label for="emp_meta_12_meses">O que você quer conquistar com o negócio nos próximos 12 meses<span class="obrig">*</span></label>
+          <textarea id="emp_meta_12_meses" name="emp_meta_12_meses" required></textarea>
+          <div class="msg-erro" id="err-emp_meta_12_meses">Campo obrigatório.</div>
+        </div>
+
+        <div class="campo">
+          <label for="emp_plano_escrito">Você tem algum plano escrito para o negócio<span class="obrig">*</span></label>
+          <select id="emp_plano_escrito" name="emp_plano_escrito" required>
+            <option value="">Selecione</option>
+            <option value="Sim">Sim</option>
+            <option value="Não">Não</option>
+            <option value="Em elaboração">Em elaboração</option>
+          </select>
+          <div class="msg-erro" id="err-emp_plano_escrito">Campo obrigatório.</div>
+        </div>
+
+        <div class="campo">
+          <label for="emp_mudaria_hoje">Se pudesse mudar uma coisa no negócio hoje, o que seria<span class="obrig">*</span></label>
+          <textarea id="emp_mudaria_hoje" name="emp_mudaria_hoje" required></textarea>
+          <div class="msg-erro" id="err-emp_mudaria_hoje">Campo obrigatório.</div>
+        </div>
+
+        <div class="campo">
+          <label for="emp_dificuldade_atual">O que é mais difícil no negócio hoje<span class="obrig">*</span></label>
+          <textarea id="emp_dificuldade_atual" name="emp_dificuldade_atual" required></textarea>
+          <div class="msg-erro" id="err-emp_dificuldade_atual">Campo obrigatório.</div>
+        </div>
+
+        <div class="campo">
+          <label for="emp_com_apoio">O que você faria no futuro para melhorar o negócio, se tivesse apoio<span class="obrig">*</span></label>
+          <textarea id="emp_com_apoio" name="emp_com_apoio" required></textarea>
+          <div class="msg-erro" id="err-emp_com_apoio">Campo obrigatório.</div>
+        </div>
+
+        <div class="separador"></div>
+        <div class="subsecao-titulo">Capacitação</div>
+
+        <div class="campo">
+          <label>Você ou alguém do negócio já fez algum curso ou treinamento<span class="obrig">*</span></label>
+          <div class="grupo-radio">
+            <label class="opcao-radio">
+              <input type="radio" name="emp_fez_curso" value="Sim" required onchange="mostrarTemasCursoEmp('Sim')">
+              <span>Sim</span>
+            </label>
+            <label class="opcao-radio">
+              <input type="radio" name="emp_fez_curso" value="Não" onchange="mostrarTemasCursoEmp('Não')">
+              <span>Não</span>
+            </label>
+          </div>
+          <div class="msg-erro" id="err-emp_fez_curso">Selecione uma opção.</div>
+        </div>
+
+        <div class="campo bloco-condicional" id="bloco-emp_tema_curso">
+          <label for="emp_tema_curso">Qual foi o tema do curso ou treinamento</label>
+          <input type="text" id="emp_tema_curso" name="emp_tema_curso">
+        </div>
+
+        <div class="campo">
+          <label>Quais temas você gostaria de aprender (marque todos que quiser)</label>
+          <div class="grupo-checkbox">
+            <label class="opcao-checkbox"><input type="checkbox" name="emp_temas_deseja" value="Gestão financeira"><span>Gestão financeira</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="emp_temas_deseja" value="Marketing digital"><span>Marketing digital</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="emp_temas_deseja" value="Precificação"><span>Precificação</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="emp_temas_deseja" value="Formalização"><span>Formalização</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="emp_temas_deseja" value="Vendas e atendimento"><span>Vendas e atendimento</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="emp_temas_deseja" value="Tecnologia e ferramentas digitais"><span>Tecnologia e ferramentas digitais</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="emp_temas_deseja" value="Turismo e hospitalidade"><span>Turismo e hospitalidade</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="emp_temas_deseja" value="Outro"><span>Outro</span></label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SECAO 7 - DIAGNOSTICO DE TURISMO COMUNITARIO -->
+    <!-- ============================================================ -->
+    <div class="secao">
+      <div class="secao-titulo">Seção 7 - Diagnóstico de Turismo Comunitário</div>
+      <div class="secao-corpo">
+
+        <div class="campo">
+          <label>Você atua ou deseja atuar com turismo comunitário<span class="obrig">*</span></label>
+          <div class="grupo-radio">
+            <label class="opcao-radio">
+              <input type="radio" name="tur_atua" value="Sim, atuo" required onchange="mostrarCamposTurismo(this.value)">
+              <span>Sim, atuo</span>
+            </label>
+            <label class="opcao-radio">
+              <input type="radio" name="tur_atua" value="Desejo atuar" onchange="mostrarCamposTurismo(this.value)">
+              <span>Desejo atuar</span>
+            </label>
+            <label class="opcao-radio">
+              <input type="radio" name="tur_atua" value="Não" onchange="mostrarCamposTurismo(this.value)">
+              <span>Não</span>
+            </label>
+          </div>
+          <div class="msg-erro" id="err-tur_atua">Selecione uma opção.</div>
+        </div>
+
+        <div class="bloco-condicional" id="bloco-turismo-completo">
+
+          <div class="subsecao-titulo">Atuação no Turismo Comunitário</div>
+
+          <div class="campo">
+            <label>Segmentos de turismo comunitário em que atua ou pretende atuar</label>
+            <div class="grupo-checkbox">
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_segmentos" value="Passeios guiados pela comunidade (tours)"><span>Passeios guiados pela comunidade</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_segmentos" value="Hospedagem comunitária"><span>Hospedagem comunitária</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_segmentos" value="Gastronomia típica / culinária local"><span>Gastronomia típica / culinária local</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_segmentos" value="Artesanato e economia criativa"><span>Artesanato e economia criativa</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_segmentos" value="Cultura, música e artes cênicas"><span>Cultura, música e artes cênicas</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_segmentos" value="Audiovisual e fotografia"><span>Audiovisual e fotografia</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_segmentos" value="Esportes e aventura urbana"><span>Esportes e aventura urbana</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_segmentos" value="Educação / intercâmbio cultural"><span>Educação / intercâmbio cultural</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_segmentos" value="Outro" onchange="mostrarSegmentoOutro(this.checked)"><span>Outro</span></label>
+            </div>
+          </div>
+
+          <div class="campo bloco-condicional" id="bloco-tur_segmento_outro">
+            <label for="tur_segmento_outro">Qual outro segmento</label>
+            <input type="text" id="tur_segmento_outro" name="tur_segmento_outro">
+          </div>
+
+          <div class="campo">
+            <label for="tur_tempo">Há quanto tempo atua no setor de turismo comunitário</label>
+            <select id="tur_tempo" name="tur_tempo">
+              <option value="">Selecione</option>
+              <option value="Até 1 ano">Até 1 ano</option>
+              <option value="2 a 3 anos">2 a 3 anos</option>
+              <option value="4 a 7 anos">4 a 7 anos</option>
+              <option value="Mais de 7 anos">Mais de 7 anos</option>
+              <option value="Ainda não atuo">Ainda não atuo</option>
+            </select>
+          </div>
+
+          <div class="separador"></div>
+          <div class="subsecao-titulo">Mercado e Comercialização</div>
+
+          <div class="campo">
+            <label for="tur_origem_visitantes">De onde vêm a maioria dos visitantes ou clientes</label>
+            <select id="tur_origem_visitantes" name="tur_origem_visitantes">
+              <option value="">Selecione</option>
+              <option value="Da própria comunidade">Da própria comunidade</option>
+              <option value="Outros bairros do Rio de Janeiro">Outros bairros do Rio de Janeiro</option>
+              <option value="Outros estados do Brasil">Outros estados do Brasil</option>
+              <option value="Turistas estrangeiros">Turistas estrangeiros</option>
+              <option value="Misto (nacional e internacional)">Misto (nacional e internacional)</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label>Por quais canais você capta visitantes ou comercializa serviços</label>
+            <div class="grupo-checkbox">
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_canais" value="Redes sociais / WhatsApp"><span>Redes sociais / WhatsApp</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_canais" value="Plataformas de turismo (Airbnb Experiences, Civitatis, GetYourGuide)"><span>Plataformas de turismo (Airbnb, Civitatis, GetYourGuide)</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_canais" value="Agências e operadoras parceiras"><span>Agências e operadoras parceiras</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_canais" value="Indicação boca a boca"><span>Indicação boca a boca</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_canais" value="Site ou aplicativo próprio"><span>Site ou aplicativo próprio</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_canais" value="Feiras e eventos"><span>Feiras e eventos</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_canais" value="Outro" onchange="mostrarCanalOutro(this.checked)"><span>Outro</span></label>
+            </div>
+          </div>
+
+          <div class="campo bloco-condicional" id="bloco-tur_canal_outro">
+            <label for="tur_canal_outro">Qual outro canal</label>
+            <input type="text" id="tur_canal_outro" name="tur_canal_outro">
+          </div>
+
+          <div class="grade-2">
+            <div class="campo">
+              <label for="tur_meses_pico">Em que meses do ano você tem maior volume de visitantes</label>
+              <input type="text" id="tur_meses_pico" name="tur_meses_pico" placeholder="Ex.: janeiro, fevereiro, julho">
+            </div>
+            <div class="campo">
+              <label for="tur_faturamento">Faturamento médio nos últimos 12 meses</label>
+              <select id="tur_faturamento" name="tur_faturamento">
+                <option value="">Selecione</option>
+                <option value="Até R$ 5.000">Até R$ 5.000</option>
+                <option value="R$ 5.001 a R$ 10.000">R$ 5.001 a R$ 10.000</option>
+                <option value="R$ 10.001 a R$ 50.000">R$ 10.001 a R$ 50.000</option>
+                <option value="Acima de R$ 50.000">Acima de R$ 50.000</option>
+                <option value="Prefere não informar">Prefere não informar</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="separador"></div>
+          <div class="subsecao-titulo">Impacto Comunitário</div>
+
+          <div class="campo">
+            <label for="tur_beneficia_moradores">O trabalho envolve ou beneficia diretamente outros moradores da comunidade</label>
+            <select id="tur_beneficia_moradores" name="tur_beneficia_moradores">
+              <option value="">Selecione</option>
+              <option value="Sim, emprego ou remunero moradores regularmente">Sim, emprego ou remunero moradores regularmente</option>
+              <option value="Sim, contrato moradores eventualmente">Sim, contrato moradores eventualmente</option>
+              <option value="Sim, faço parceria sem remuneração direta">Sim, faço parceria sem remuneração direta</option>
+              <option value="Não">Não</option>
+            </select>
+          </div>
+
+          <div class="grade-2">
+            <div class="campo">
+              <label for="tur_qtd_moradores">Quantos moradores você emprega ou remunera diretamente</label>
+              <input type="number" id="tur_qtd_moradores" name="tur_qtd_moradores" min="0">
+            </div>
+            <div class="campo">
+              <label>Você atua com grupos vulneráveis ou em situação de vulnerabilidade</label>
+              <div class="grupo-radio">
+                <label class="opcao-radio">
+                  <input type="radio" name="tur_atua_vulneraveis" value="Sim">
+                  <span>Sim</span>
+                </label>
+                <label class="opcao-radio">
+                  <input type="radio" name="tur_atua_vulneraveis" value="Não">
+                  <span>Não</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="separador"></div>
+          <div class="subsecao-titulo">Turismo Responsável</div>
+
+          <div class="campo">
+            <label>Práticas em relação aos impactos do turismo na comunidade</label>
+            <div class="grupo-checkbox">
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_praticas" value="Limita o número de visitantes por grupo/dia"><span>Limita o número de visitantes por grupo / dia</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_praticas" value="Orienta visitantes sobre normas e respeito à comunidade"><span>Orienta visitantes sobre normas e respeito à comunidade</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_praticas" value="Parte da renda é revertida para projetos sociais/coletivos"><span>Parte da renda revertida para projetos sociais ou coletivos</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_praticas" value="Articula com lideranças comunitárias"><span>Articula com lideranças comunitárias</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_praticas" value="Nenhuma prática específica por enquanto"><span>Nenhuma prática específica por enquanto</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_praticas" value="Outra" onchange="mostrarPraticaOutra(this.checked)"><span>Outra</span></label>
+            </div>
+          </div>
+
+          <div class="campo bloco-condicional" id="bloco-tur_pratica_outra">
+            <label for="tur_pratica_outra">Qual outra prática</label>
+            <input type="text" id="tur_pratica_outra" name="tur_pratica_outra">
+          </div>
+
+          <div class="campo">
+            <label for="tur_risco_gentrificacao">Você percebe riscos de gentrificação ou turistificação excessiva na sua comunidade</label>
+            <select id="tur_risco_gentrificacao" name="tur_risco_gentrificacao">
+              <option value="">Selecione</option>
+              <option value="Sim, já percebo impactos negativos">Sim, já percebo impactos negativos</option>
+              <option value="Sim, mas ainda não são graves">Sim, mas ainda não são graves</option>
+              <option value="Não percebo esse risco">Não percebo esse risco</option>
+              <option value="Não sei avaliar">Não sei avaliar</option>
+            </select>
+          </div>
+
+          <div class="separador"></div>
+          <div class="subsecao-titulo">Tecnologia e Capacitação Turística</div>
+
+          <div class="campo">
+            <label>Você produz conteúdo sobre seus serviços nas redes sociais</label>
+            <div class="grupo-radio">
+              <label class="opcao-radio">
+                <input type="radio" name="tur_conteudo_redes" value="Sim" onchange="mostrarRedesTur('Sim')">
+                <span>Sim</span>
+              </label>
+              <label class="opcao-radio">
+                <input type="radio" name="tur_conteudo_redes" value="Não" onchange="mostrarRedesTur('Não')">
+                <span>Não</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="campo bloco-condicional" id="bloco-tur_quais_redes">
+            <label>Quais redes sociais você utiliza para o negócio turístico</label>
+            <div class="grupo-checkbox">
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_quais_redes" value="Instagram"><span>Instagram</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_quais_redes" value="WhatsApp"><span>WhatsApp</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_quais_redes" value="Facebook"><span>Facebook</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_quais_redes" value="TikTok"><span>TikTok</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_quais_redes" value="YouTube"><span>YouTube</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_quais_redes" value="Outra"><span>Outra</span></label>
+            </div>
+          </div>
+
+          <div class="campo">
+            <label>De 0 a 5, quanta facilidade você tem em aprender e usar novas tecnologias</label>
+            <div class="escala-likert">
+              <span>Difícil</span>
+              <div class="opcoes-escala">
+                <label class="opcao-escala"><input type="radio" name="tur_facilidade_tecnologia" value="1"><label>1</label></label>
+                <label class="opcao-escala"><input type="radio" name="tur_facilidade_tecnologia" value="2"><label>2</label></label>
+                <label class="opcao-escala"><input type="radio" name="tur_facilidade_tecnologia" value="3"><label>3</label></label>
+                <label class="opcao-escala"><input type="radio" name="tur_facilidade_tecnologia" value="4"><label>4</label></label>
+                <label class="opcao-escala"><input type="radio" name="tur_facilidade_tecnologia" value="5"><label>5</label></label>
+              </div>
+              <span>Fácil</span>
+            </div>
+          </div>
+
+          <div class="campo">
+            <label>Quais tecnologias digitais você utiliza no negócio turístico</label>
+            <div class="grupo-checkbox">
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_tecnologias" value="Sistema de gestão (financeiro, agendamento)"><span>Sistema de gestão (financeiro, agendamento)</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_tecnologias" value="Site / aplicativo próprio"><span>Site / aplicativo próprio</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_tecnologias" value="Ferramentas de design gráfico"><span>Ferramentas de design gráfico</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_tecnologias" value="Inteligência artificial"><span>Inteligência artificial</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_tecnologias" value="Plataformas de pagamento digital (PIX, maquininha)"><span>Plataformas de pagamento digital (PIX, maquininha)</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_tecnologias" value="Outra"><span>Outra</span></label>
+            </div>
+          </div>
+
+          <div class="campo">
+            <label>Você realizou algum curso ou capacitação relacionado ao negócio nos últimos 3 anos</label>
+            <div class="grupo-radio">
+              <label class="opcao-radio">
+                <input type="radio" name="tur_fez_capacitacao" value="Sim" onchange="mostrarTemaCursaTur('Sim')">
+                <span>Sim</span>
+              </label>
+              <label class="opcao-radio">
+                <input type="radio" name="tur_fez_capacitacao" value="Não" onchange="mostrarTemaCursaTur('Não')">
+                <span>Não</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="campo bloco-condicional" id="bloco-tur_tema_capacitacao">
+            <label for="tur_tema_capacitacao">Qual foi o tema da capacitação</label>
+            <select id="tur_tema_capacitacao" name="tur_tema_capacitacao">
+              <option value="">Selecione</option>
+              <option value="Gestão de negócios">Gestão de negócios</option>
+              <option value="Marketing digital">Marketing digital</option>
+              <option value="Finanças e precificação">Finanças e precificação</option>
+              <option value="Formalização / legislação">Formalização / legislação</option>
+              <option value="Turismo e hospitalidade">Turismo e hospitalidade</option>
+              <option value="Guia de turismo / condução de grupos">Guia de turismo / condução de grupos</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+
+          <div class="separador"></div>
+          <div class="subsecao-titulo">Finanças e Formalização Turística</div>
+
+          <div class="campo">
+            <label>Quais foram as fontes de recursos para começar o negócio turístico</label>
+            <div class="grupo-checkbox">
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_fontes_recursos" value="Capital próprio / familiar"><span>Capital próprio / familiar</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_fontes_recursos" value="Banco / instituição financeira"><span>Banco / instituição financeira</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_fontes_recursos" value="Microcrédito / Sebrae"><span>Microcrédito / Sebrae</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_fontes_recursos" value="Editais e patrocínios"><span>Editais e patrocínios</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_fontes_recursos" value="Investidor / parceiro"><span>Investidor / parceiro</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_fontes_recursos" value="Nenhuma"><span>Nenhuma</span></label>
+            </div>
+          </div>
+
+          <div class="grade-2">
+            <div class="campo">
+              <label>Você depende de editais ou patrocínios para o negócio funcionar</label>
+              <div class="grupo-radio">
+                <label class="opcao-radio"><input type="radio" name="tur_depende_editais" value="Sim"><span>Sim</span></label>
+                <label class="opcao-radio"><input type="radio" name="tur_depende_editais" value="Não"><span>Não</span></label>
+              </div>
+            </div>
+            <div class="campo">
+              <label>O negócio turístico tem conta bancária própria</label>
+              <div class="grupo-radio">
+                <label class="opcao-radio"><input type="radio" name="tur_conta_bancaria" value="Sim"><span>Sim</span></label>
+                <label class="opcao-radio"><input type="radio" name="tur_conta_bancaria" value="Não"><span>Não</span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="grade-2">
+            <div class="campo">
+              <label>Já acessou crédito formal para o negócio turístico</label>
+              <div class="grupo-radio">
+                <label class="opcao-radio"><input type="radio" name="tur_credito_formal" value="Sim"><span>Sim</span></label>
+                <label class="opcao-radio"><input type="radio" name="tur_credito_formal" value="Não"><span>Não</span></label>
+              </div>
+            </div>
+            <div class="campo">
+              <label>A marca do negócio é registrada (INPI ou similar)</label>
+              <div class="grupo-radio">
+                <label class="opcao-radio"><input type="radio" name="tur_marca_registrada" value="Sim"><span>Sim</span></label>
+                <label class="opcao-radio"><input type="radio" name="tur_marca_registrada" value="Não"><span>Não</span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="separador"></div>
+          <div class="subsecao-titulo">Apoio Institucional</div>
+
+          <div class="campo">
+            <label>Você recebe ou já recebeu apoio técnico ou financeiro de alguma instituição</label>
+            <div class="grupo-radio">
+              <label class="opcao-radio">
+                <input type="radio" name="tur_recebeu_apoio" value="Sim" onchange="mostrarTipoInstituicao('Sim')">
+                <span>Sim</span>
+              </label>
+              <label class="opcao-radio">
+                <input type="radio" name="tur_recebeu_apoio" value="Não" onchange="mostrarTipoInstituicao('Não')">
+                <span>Não</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="campo bloco-condicional" id="bloco-tur_tipo_instituicao">
+            <label>De qual tipo de instituição você recebeu apoio</label>
+            <div class="grupo-checkbox">
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_tipo_instituicao" value="Prefeitura / órgão público municipal"><span>Prefeitura / órgão público municipal</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_tipo_instituicao" value="Governo do Estado do Rio de Janeiro"><span>Governo do Estado do Rio de Janeiro</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_tipo_instituicao" value="ONG / organização da sociedade civil"><span>ONG / organização da sociedade civil</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_tipo_instituicao" value="Sebrae"><span>Sebrae</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_tipo_instituicao" value="Universidade ou instituto de pesquisa"><span>Universidade ou instituto de pesquisa</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_tipo_instituicao" value="Empresa privada / patrocínio"><span>Empresa privada / patrocínio</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_tipo_instituicao" value="Outro"><span>Outro</span></label>
+            </div>
+          </div>
+
+          <div class="separador"></div>
+          <div class="subsecao-titulo">Dificuldades e Perspectivas</div>
+
+          <div class="campo">
+            <label>Principais dificuldades para manter ou expandir o negócio turístico</label>
+            <div class="grupo-checkbox">
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_dificuldades" value="Falta de capital de giro"><span>Falta de capital de giro</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_dificuldades" value="Dificuldade de acesso a plataformas de turismo"><span>Dificuldade de acesso a plataformas de turismo</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_dificuldades" value="Insegurança pública / restrições de acesso na comunidade"><span>Insegurança pública / restrições de acesso</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_dificuldades" value="Falta de apoio do poder publico"><span>Falta de apoio do poder publico</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_dificuldades" value="Marketing e captacao de visitantes"><span>Marketing e captacao de visitantes</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_dificuldades" value="Formalização e burocracia"><span>Formalização e burocracia</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_dificuldades" value="Falta de qualificação técnica"><span>Falta de qualificação técnica</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_dificuldades" value="Concorrência"><span>Concorrência</span></label>
+              <label class="opcao-checkbox"><input type="checkbox" name="tur_dificuldades" value="Outra"><span>Outra</span></label>
+            </div>
+          </div>
+
+          <div class="campo">
+            <label for="tur_temas_capacitacao_futura">Se pudesse fazer uma capacitação em breve, qual tema lhe interessa mais</label>
+            <select id="tur_temas_capacitacao_futura" name="tur_temas_capacitacao_futura">
+              <option value="">Selecione</option>
+              <option value="Marketing digital e gestão de redes sociais">Marketing digital e gestão de redes sociais</option>
+              <option value="Acesso a crédito e finanças">Acesso a crédito e finanças</option>
+              <option value="Precificação de serviços turísticos">Precificação de serviços turísticos</option>
+              <option value="Certificação e regulação de guia de turismo">Certificação e regulação de guia de turismo</option>
+              <option value="Sustentabilidade e turismo responsável">Sustentabilidade e turismo responsável</option>
+              <option value="Exportação / atração de turistas estrangeiros">Exportação / atração de turistas estrangeiros</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="tur_medidas_poder_publico">Quais seriam as principais medidas que o poder público ou parceiros poderiam tomar para impulsionar o turismo comunitário na sua comunidade</label>
+            <textarea id="tur_medidas_poder_publico" name="tur_medidas_poder_publico" placeholder="Liste até 3 medidas"></textarea>
+          </div>
+
+          <div class="campo">
+            <label for="tur_dificuldade_crescimento">O que mais dificulta o crescimento do seu negócio hoje</label>
+            <textarea id="tur_dificuldade_crescimento" name="tur_dificuldade_crescimento"></textarea>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SECAO 8 - PRIORIDADES E PLANO DE ACAO -->
+    <!-- ============================================================ -->
+    <div class="secao">
+      <div class="secao-titulo">Seção 8 - Prioridades e Plano de Ação</div>
+      <div class="secao-corpo">
+
+        <div class="campo">
+          <label for="prioridade_gargalo_emp">Principal gargalo empresarial identificado<span class="obrig">*</span></label>
+          <textarea id="prioridade_gargalo_emp" name="prioridade_gargalo_emp" required></textarea>
+          <div class="msg-erro" id="err-prioridade_gargalo_emp">Campo obrigatório.</div>
+        </div>
+
+        <div class="campo">
+          <label for="prioridade_gargalo_tur">Principal gargalo turístico identificado</label>
+          <textarea id="prioridade_gargalo_tur" name="prioridade_gargalo_tur"></textarea>
+        </div>
+
+        <div class="campo">
+          <label for="prioridade_maturidade">Nível de maturidade do negócio<span class="obrig">*</span></label>
+          <select id="prioridade_maturidade" name="prioridade_maturidade" required>
+            <option value="">Selecione</option>
+            <option value="Inicial">Inicial</option>
+            <option value="Em organização">Em organização</option>
+            <option value="Em crescimento">Em crescimento</option>
+            <option value="Estruturado">Estruturado</option>
+          </select>
+          <div class="msg-erro" id="err-prioridade_maturidade">Campo obrigatório.</div>
+        </div>
+
+        <div class="campo">
+          <label for="prioridade_30_dias">Prioridade recomendada para os próximos 30 dias<span class="obrig">*</span></label>
+          <textarea id="prioridade_30_dias" name="prioridade_30_dias" required></textarea>
+          <div class="msg-erro" id="err-prioridade_30_dias">Campo obrigatório.</div>
+        </div>
+
+        <div class="campo">
+          <label for="prioridade_60_dias">Prioridade recomendada para 60 dias<span class="obrig">*</span></label>
+          <textarea id="prioridade_60_dias" name="prioridade_60_dias" required></textarea>
+          <div class="msg-erro" id="err-prioridade_60_dias">Campo obrigatório.</div>
+        </div>
+
+        <div class="campo">
+          <label for="prioridade_90_dias">Prioridade recomendada para 90 dias<span class="obrig">*</span></label>
+          <textarea id="prioridade_90_dias" name="prioridade_90_dias" required></textarea>
+          <div class="msg-erro" id="err-prioridade_90_dias">Campo obrigatório.</div>
+        </div>
+
+        <div class="campo">
+          <label>Encaminhamento sugerido (marque todos que se aplicam)</label>
+          <div class="grupo-checkbox">
+            <label class="opcao-checkbox"><input type="checkbox" name="prioridade_encaminhamento" value="Consultoria financeira"><span>Consultoria financeira</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="prioridade_encaminhamento" value="Marketing e redes sociais"><span>Marketing e redes sociais</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="prioridade_encaminhamento" value="Precificacao"><span>Precificacao</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="prioridade_encaminhamento" value="Formalização"><span>Formalização</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="prioridade_encaminhamento" value="Turismo responsável"><span>Turismo responsável</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="prioridade_encaminhamento" value="Plataformas de turismo"><span>Plataformas de turismo</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="prioridade_encaminhamento" value="Capacitação de guia"><span>Capacitação de guia</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="prioridade_encaminhamento" value="Acesso a crédito"><span>Acesso a crédito</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="prioridade_encaminhamento" value="Outro"><span>Outro</span></label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-enviar" id="btnEnviar">Enviar Diagnóstico</button>
+
+      </div>
+    </div>
+
+  </form>
+</main>
+
+<footer class="rodape">
+  Formulário de uso exclusivo para pesquisa e orientação técnica. Dados tratados de forma confidencial.<br>
+  Prospera Turismo - Instituto BR Arte
+</footer>
+
+<script>
+  // ============================================================
+  // CONFIGURACAO
+  // ============================================================
+  var WEB_APP_URL = 'COLE_AQUI_A_URL_DO_WEB_APP';
+
+  // ============================================================
+  // MASCARAS
+  // ============================================================
+  function mascaraTelefone(input) {
+    var v = input.value.replace(/\D/g, '').substring(0, 11);
+    if (v.length <= 10) {
+      v = v.replace(/^(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+    } else {
+      v = v.replace(/^(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+    }
+    input.value = v;
+  }
+
+  function mascaraCPF(input) {
+    var v = input.value.replace(/\D/g, '').substring(0, 11);
+    v = v.replace(/(\d{3})(\d)/, '$1.$2');
+    v = v.replace(/(\d{3})(\d)/, '$1.$2');
+    v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    input.value = v;
+  }
+
+  function mascaraCNPJ(input) {
+    var v = input.value.replace(/\D/g, '').substring(0, 14);
+    v = v.replace(/^(\d{2})(\d)/, '$1.$2');
+    v = v.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+    v = v.replace(/\.(\d{3})(\d)/, '.$1/$2');
+    v = v.replace(/(\d{4})(\d)/, '$1-$2');
+    input.value = v;
+  }
+
+  function mascaraCEP(input) {
+    var v = input.value.replace(/\D/g, '').substring(0, 8);
+    v = v.replace(/^(\d{5})(\d)/, '$1-$2');
+    input.value = v;
+  }
+
+  document.getElementById('contato_telefone').addEventListener('input', function() { mascaraTelefone(this); });
+  document.getElementById('contato_whatsapp').addEventListener('input', function() { mascaraTelefone(this); });
+  document.getElementById('negocio_cpf').addEventListener('input', function() { mascaraCPF(this); });
+  document.getElementById('negocio_cnpj').addEventListener('input', function() { mascaraCNPJ(this); });
+  document.getElementById('endereco_cep').addEventListener('input', function() { mascaraCEP(this); });
+
+  // ============================================================
+  // CAMPOS CONDICIONAIS
+  // ============================================================
+  function mostrarOutroGenero(val) {
+    var bloco = document.getElementById('bloco-pessoa_genero_outro');
+    if (val === 'Outro') {
+      bloco.classList.add('visivel');
+    } else {
+      bloco.classList.remove('visivel');
+      document.getElementById('pessoa_genero_outro').value = '';
+    }
+  }
+
+  function mostrarOutraRaca(val) {
+    var bloco = document.getElementById('bloco-pessoa_cor_raca_outro');
+    if (val === 'Outra') {
+      bloco.classList.add('visivel');
+    } else {
+      bloco.classList.remove('visivel');
+      document.getElementById('pessoa_cor_raca_outro').value = '';
+    }
+  }
+
+  function mostrarDocumento(val) {
+    var blocoCPF  = document.getElementById('bloco-negocio_cpf');
+    var blocoCNPJ = document.getElementById('bloco-negocio_cnpj');
+    if (val === 'Não, informal/autônomo(a)') {
+      blocoCPF.classList.add('visivel');
+      blocoCNPJ.classList.remove('visivel');
+      document.getElementById('negocio_cnpj').value = '';
+    } else if (val !== '') {
+      blocoCNPJ.classList.add('visivel');
+      blocoCPF.classList.remove('visivel');
+      document.getElementById('negocio_cpf').value = '';
+    } else {
+      blocoCPF.classList.remove('visivel');
+      blocoCNPJ.classList.remove('visivel');
+    }
+  }
+
+  function mostrarRedesEmp(val) {
+    var bloco = document.getElementById('bloco-emp_quais_redes');
+    if (val === 'Sim') {
+      bloco.classList.add('visivel');
+    } else {
+      bloco.classList.remove('visivel');
+      document.querySelectorAll('input[name="emp_quais_redes"]').forEach(function(cb) { cb.checked = false; });
+    }
+  }
+
+  function mostrarTemasCursoEmp(val) {
+    var bloco = document.getElementById('bloco-emp_tema_curso');
+    if (val === 'Sim') {
+      bloco.classList.add('visivel');
+    } else {
+      bloco.classList.remove('visivel');
+      document.getElementById('emp_tema_curso').value = '';
+    }
+  }
+
+  function mostrarCamposTurismo(val) {
+    var bloco = document.getElementById('bloco-turismo-completo');
+    if (val === 'Sim, atuo' || val === 'Desejo atuar') {
+      bloco.classList.add('visivel');
+    } else {
+      bloco.classList.remove('visivel');
+    }
+  }
+
+  function mostrarSegmentoOutro(checked) {
+    var bloco = document.getElementById('bloco-tur_segmento_outro');
+    if (checked) {
+      bloco.classList.add('visivel');
+    } else {
+      bloco.classList.remove('visivel');
+      document.getElementById('tur_segmento_outro').value = '';
+    }
+  }
+
+  function mostrarCanalOutro(checked) {
+    var bloco = document.getElementById('bloco-tur_canal_outro');
+    if (checked) {
+      bloco.classList.add('visivel');
+    } else {
+      bloco.classList.remove('visivel');
+      document.getElementById('tur_canal_outro').value = '';
+    }
+  }
+
+  function mostrarPraticaOutra(checked) {
+    var bloco = document.getElementById('bloco-tur_pratica_outra');
+    if (checked) {
+      bloco.classList.add('visivel');
+    } else {
+      bloco.classList.remove('visivel');
+      document.getElementById('tur_pratica_outra').value = '';
+    }
+  }
+
+  function mostrarRedesTur(val) {
+    var bloco = document.getElementById('bloco-tur_quais_redes');
+    if (val === 'Sim') {
+      bloco.classList.add('visivel');
+    } else {
+      bloco.classList.remove('visivel');
+      document.querySelectorAll('input[name="tur_quais_redes"]').forEach(function(cb) { cb.checked = false; });
+    }
+  }
+
+  function mostrarTemaCursaTur(val) {
+    var bloco = document.getElementById('bloco-tur_tema_capacitacao');
+    if (val === 'Sim') {
+      bloco.classList.add('visivel');
+    } else {
+      bloco.classList.remove('visivel');
+      document.getElementById('tur_tema_capacitacao').value = '';
+    }
+  }
+
+  function mostrarTipoInstituicao(val) {
+    var bloco = document.getElementById('bloco-tur_tipo_instituicao');
+    if (val === 'Sim') {
+      bloco.classList.add('visivel');
+    } else {
+      bloco.classList.remove('visivel');
+      document.querySelectorAll('input[name="tur_tipo_instituicao"]').forEach(function(cb) { cb.checked = false; });
+    }
+  }
+
+  // ============================================================
+  // CALCULO AUTOMATICO DE IDADE
+  // ============================================================
+  function calcularIdade(dataNasc) {
+    if (!dataNasc) return;
+    var partes = dataNasc.split('-');
+    if (partes.length !== 3) return;
+    var nascimento = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
+    var hoje = new Date();
+    var idade = hoje.getFullYear() - nascimento.getFullYear();
+    var mesAtual = hoje.getMonth();
+    var mesDia = hoje.getDate();
+    if (mesAtual < nascimento.getMonth() ||
+        (mesAtual === nascimento.getMonth() && mesDia < nascimento.getDate())) {
+      idade--;
+    }
+    if (idade >= 0 && idade <= 120) {
+      document.getElementById('pessoa_idade').value = idade;
+    }
+  }
+
+  // ============================================================
+  // COLETA DE CHECKBOXES
+  // ============================================================
+  var gruposCheckbox = [
+    'emp_quais_redes', 'emp_temas_deseja',
+    'tur_segmentos', 'tur_canais', 'tur_praticas',
+    'tur_quais_redes', 'tur_tecnologias', 'tur_fontes_recursos',
+    'tur_tipo_instituicao', 'tur_dificuldades', 'prioridade_encaminhamento'
+  ];
+
+  function coletarCheckboxes(dados) {
+    gruposCheckbox.forEach(function(nome) {
+      var marcados = Array.from(document.querySelectorAll('input[name="' + nome + '"]:checked'))
+        .map(function(cb) { return cb.value; });
+      dados[nome] = marcados.join(' | ');
+    });
+  }
+
+  function coletarRadios(dados, nomeCampo) {
+    var radio = document.querySelector('input[name="' + nomeCampo + '"]:checked');
+    dados[nomeCampo] = radio ? radio.value : '';
+  }
+
+  // ============================================================
+  // VALIDACAO
+  // ============================================================
+  function validarCampoObrig(id) {
+    var el = document.getElementById(id);
+    if (!el) return true;
+    var val = el.value ? el.value.trim() : '';
+    var erro = document.getElementById('err-' + id);
+    if (!val) {
+      el.classList.add('erro');
+      if (erro) erro.classList.add('visivel');
+      return false;
+    }
+    el.classList.remove('erro');
+    if (erro) erro.classList.remove('visivel');
+    return true;
+  }
+
+  function validarRadioObrig(nome) {
+    var radio = document.querySelector('input[name="' + nome + '"]:checked');
+    var erro = document.getElementById('err-' + nome);
+    if (!radio) {
+      if (erro) erro.classList.add('visivel');
+      return false;
+    }
+    if (erro) erro.classList.remove('visivel');
+    return true;
+  }
+
+  function validarFormulario() {
+    var valido = true;
+    var primeiroCampoErro = null;
+
+    var camposObrig = [
+      'coleta_data', 'coleta_territorio', 'coleta_entrevistador', 'coleta_inicio',
+      'pessoa_nome_iniciativa', 'pessoa_nome_responsavel', 'pessoa_genero',
+      'pessoa_data_nascimento', 'pessoa_idade', 'pessoa_escolaridade', 'pessoa_cor_raca', 'pessoa_tempo_territorio',
+      'contato_telefone',
+      'endereco_tipo_logradouro', 'endereco_logradouro', 'endereco_numero',
+      'endereco_bairro', 'endereco_municipio', 'endereco_uf', 'endereco_cep', 'endereco_tipo',
+      'negocio_ramo', 'negocio_formalizado', 'negocio_inicio_atividades', 'negocio_qtd_pessoas',
+      'negocio_motivo', 'negocio_descricao',
+      'emp_organiza_dinheiro', 'emp_separa_pessoal', 'emp_sabe_lucro', 'emp_preocupacao_financeira',
+      'emp_quem_ajuda', 'emp_materiais', 'emp_tecnologia', 'emp_dificuldades',
+      'emp_como_divulga', 'emp_onde_vende', 'emp_acompanha_vendas', 'emp_melhoria_clientes',
+      'emp_objetivo', 'emp_meta_12_meses', 'emp_plano_escrito',
+      'emp_mudaria_hoje', 'emp_dificuldade_atual', 'emp_com_apoio',
+      'prioridade_gargalo_emp', 'prioridade_maturidade',
+      'prioridade_30_dias', 'prioridade_60_dias', 'prioridade_90_dias'
+    ];
+
+    var radiosObrig = [
+      'coleta_tipo', 'pessoa_morador', 'negocio_fonte_renda',
+      'emp_conta_bancaria', 'emp_credito_formal', 'emp_usa_redes', 'emp_fez_curso', 'tur_atua'
+    ];
+
+    camposObrig.forEach(function(id) {
+      if (!validarCampoObrig(id)) {
+        valido = false;
+        if (!primeiroCampoErro) primeiroCampoErro = document.getElementById(id);
+      }
+    });
+
+    radiosObrig.forEach(function(nome) {
+      if (!validarRadioObrig(nome)) {
+        valido = false;
+        if (!primeiroCampoErro) {
+          var r = document.querySelector('input[name="' + nome + '"]');
+          if (r) primeiroCampoErro = r;
+        }
+      }
+    });
+
+    if (!valido && primeiroCampoErro) {
+      primeiroCampoErro.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    return valido;
+  }
+
+  // ============================================================
+  // SUBMISSAO DO FORMULARIO
+  // ============================================================
+  document.getElementById('formulario').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    if (!validarFormulario()) {
+      document.getElementById('avisoErro').textContent = 'Preencha todos os campos obrigatórios antes de enviar.';
+      document.getElementById('avisoErro').classList.add('visivel');
+      setTimeout(function() {
+        document.getElementById('avisoErro').classList.remove('visivel');
+      }, 6000);
+      return;
+    }
+
+    var btn = document.getElementById('btnEnviar');
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+
+    // Definir horario de termino automaticamente se nao preenchido
+    if (!document.getElementById('coleta_termino').value) {
+      var agora = new Date();
+      document.getElementById('coleta_termino').value =
+        agora.getHours().toString().padStart(2, '0') + ':' +
+        agora.getMinutes().toString().padStart(2, '0');
+    }
+
+    // Coletar todos os campos
+    var dados = {};
+    var formulario = document.getElementById('formulario');
+    var elementos = formulario.elements;
+    for (var i = 0; i < elementos.length; i++) {
+      var el = elementos[i];
+      if (!el.name || el.type === 'checkbox' || el.type === 'radio' || el.type === 'submit') continue;
+      dados[el.name] = el.value || '';
+    }
+
+    // Coletar radios
+    var todosRadios = [
+      'coleta_tipo', 'pessoa_morador', 'negocio_fonte_renda',
+      'emp_conta_bancaria', 'emp_credito_formal', 'emp_usa_redes', 'emp_fez_curso',
+      'tur_atua', 'tur_conteudo_redes', 'tur_fez_capacitacao',
+      'tur_depende_editais', 'tur_conta_bancaria', 'tur_credito_formal',
+      'tur_marca_registrada', 'tur_atua_vulneraveis', 'tur_recebeu_apoio',
+      'tur_facilidade_tecnologia'
+    ];
+    todosRadios.forEach(function(nome) { coletarRadios(dados, nome); });
+
+    // Coletar checkboxes
+    coletarCheckboxes(dados);
+
+    fetch(WEB_APP_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      cache: 'no-cache',
+      body: JSON.stringify(dados)
+    })
+    .then(function() {
+      document.getElementById('avisoSucesso').classList.add('visivel');
+      document.getElementById('formulario').reset();
+      // Ocultar todos os blocos condicionais
+      document.querySelectorAll('.bloco-condicional').forEach(function(b) {
+        b.classList.remove('visivel');
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(function() {
+        document.getElementById('avisoSucesso').classList.remove('visivel');
+      }, 10000);
+    })
+    .catch(function(err) {
+      document.getElementById('avisoErro').textContent =
+        'Erro ao enviar. Verifique sua conexão e tente novamente. Detalhe: ' + err.message;
+      document.getElementById('avisoErro').classList.add('visivel');
+      setTimeout(function() {
+        document.getElementById('avisoErro').classList.remove('visivel');
+      }, 8000);
+    })
+    .finally(function() {
+      btn.disabled = false;
+      btn.textContent = 'Enviar Diagnóstico';
+    });
+  });
+</script>
+
+</body>
+</html>

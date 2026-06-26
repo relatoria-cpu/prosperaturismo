@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diagnóstico de Turismo Comunitário</title>
+  <title>Diagnóstico de Turismo Comunitário | Prospera Turismo</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -25,48 +25,56 @@
     .cabecalho {
       background: var(--azul-principal);
       color: var(--branco);
-      padding: 24px 30px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
-    .cabecalho-logos {
+    .cab-banner {
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+    }
+    .cab-banner img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+    .cab-inferior {
+      padding: 20px 24px 24px;
+      text-align: center;
+    }
+    .cab-logos {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 24px;
-      margin-bottom: 16px;
+      gap: 32px;
+      margin-bottom: 18px;
       flex-wrap: wrap;
     }
-    .cabecalho-logos img {
-      height: 52px;
+    .cab-logos img {
+      height: 40px;
       width: auto;
       object-fit: contain;
+      opacity: 0.95;
     }
-    .cabecalho-logos img.logo-central {
-      height: 64px;
-    }
-    .cabecalho-textos {
-      text-align: center;
-    }
-    .cabecalho-textos h1 {
+    .cab-titulo {
       font-family: 'Montserrat', sans-serif;
-      font-size: 22px;
+      font-size: clamp(18px, 4vw, 26px);
       font-weight: 700;
-      margin-bottom: 4px;
+      color: var(--branco);
+      margin-bottom: 8px;
+      letter-spacing: 0.2px;
+      line-height: 1.25;
     }
-    .cabecalho-textos p {
-      font-size: 14px;
-      opacity: 0.85;
+    .cab-subtitulo {
+      font-size: clamp(12px, 2.5vw, 14px);
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.6;
     }
-    .cabecalho-textos .territarios {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      color: var(--amarelo);
-      margin-top: 6px;
+    @media (max-width: 480px) {
+      .cab-inferior { padding: 16px 16px 20px; }
+      .cab-logos { gap: 20px; }
+      .cab-logos img { height: 32px; }
     }
     main {
       max-width: 920px;
@@ -320,15 +328,20 @@
 <body>
 
 <header class="cabecalho">
-  <div class="cabecalho-logos">
-    <img src="assets/logo-instituto-br.png" alt="Instituto BR Arte" title="Instituto BR Arte">
-    <img src="assets/logo-prospera-turismo.png" alt="Prospera Turismo" title="Prospera Turismo" class="logo-central">
-    <img src="assets/logo-prefeitura-rio.png" alt="Prefeitura do Rio" title="Prefeitura do Rio">
+  <div class="cab-banner">
+    <img
+      src="assets/capa-prospera-turismo.png"
+      alt="Prospera Turismo — Diagnóstico de Turismo Comunitário"
+      onerror="this.style.display='none'"
+    >
   </div>
-  <div class="cabecalho-textos">
-    <h1>Diagnóstico de Turismo Comunitário</h1>
-    
-    
+  <div class="cab-inferior">
+    <div class="cab-logos">
+      <img src="assets/logo-instituto-br.png" alt="Instituto BR Arte" onerror="this.style.display='none'">
+      <img src="assets/logo-prefeitura-rio.png" alt="Prefeitura do Rio" onerror="this.style.display='none'">
+    </div>
+    <h1 class="cab-titulo">Diagnóstico de Turismo Comunitário</h1>
+    <p class="cab-subtitulo">Levantamento de informações para apoio técnico, fortalecimento de negócios locais e desenvolvimento territorial.</p>
   </div>
 </header>
 
@@ -529,6 +542,18 @@
           <div class="msg-erro" id="err-pessoa_tempo_territorio">Campo obrigatório.</div>
         </div>
 
+        <div class="campo">
+          <label>Idiomas falados</label>
+          <p class="texto-ajuda">Marque todos os idiomas em que consegue se comunicar com visitantes e turistas.</p>
+          <div class="grupo-checkbox">
+            <label class="opcao-checkbox"><input type="checkbox" name="pessoa_idiomas" value="Português"><span>Português</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="pessoa_idiomas" value="Inglês"><span>Inglês</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="pessoa_idiomas" value="Espanhol"><span>Espanhol</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="pessoa_idiomas" value="Francês"><span>Francês</span></label>
+            <label class="opcao-checkbox"><input type="checkbox" name="pessoa_idiomas" value="Outro"><span>Outro</span></label>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -692,6 +717,18 @@
           </div>
         </div>
 
+        <div class="campo">
+          <label for="negocio_ocupacao">Ocupação<span class="obrig">*</span></label>
+          <select id="negocio_ocupacao" name="negocio_ocupacao" required>
+            <option value="">Selecione</option>
+            <option value="1000 - Não possui">1000 - Não possui</option>
+            <option value="1001 - Negócio informal (sem CNPJ)">1001 - Negócio informal (sem CNPJ)</option>
+            <option value="1002 - Atividade Rural">1002 - Atividade Rural</option>
+            <option value="1003 - Ambulante">1003 - Ambulante</option>
+          </select>
+          <div class="msg-erro" id="err-negocio_ocupacao">Campo obrigatório.</div>
+        </div>
+
         <div class="grade-2">
           <div class="campo bloco-condicional" id="bloco-negocio_cpf">
             <label for="negocio_cpf">CPF</label>
@@ -708,6 +745,16 @@
             <label for="negocio_qtd_pessoas">Quantas pessoas trabalham no negócio (incluindo você)<span class="obrig">*</span></label>
             <input type="number" id="negocio_qtd_pessoas" name="negocio_qtd_pessoas" min="1" required>
             <div class="msg-erro" id="err-negocio_qtd_pessoas">Informe a quantidade.</div>
+          </div>
+          <div class="campo">
+            <label for="negocio_acessibilidade">O espaço, serviço ou experiência possui algum recurso de acessibilidade</label>
+            <select id="negocio_acessibilidade" name="negocio_acessibilidade">
+              <option value="">Selecione</option>
+              <option value="Sim, totalmente">Sim, totalmente</option>
+              <option value="Sim, parcialmente">Sim, parcialmente</option>
+              <option value="Não">Não</option>
+              <option value="Não se aplica">Não se aplica</option>
+            </select>
           </div>
           <div class="campo">
             <label>O negócio é a principal fonte de renda<span class="obrig">*</span></label>
@@ -776,6 +823,12 @@
             </select>
             <div class="msg-erro" id="err-emp_sabe_lucro">Campo obrigatório.</div>
           </div>
+        </div>
+
+        <div class="campo">
+          <label for="emp_lucro_mes_passado_detalhe">Se souber, informe quanto ganhou no mês passado ou descreva aproximadamente</label>
+          <input type="text" id="emp_lucro_mes_passado_detalhe" name="emp_lucro_mes_passado_detalhe" placeholder="Ex.: R$ 1.500,00 ou aproximadamente R$ 1.000,00 por mês">
+          <p class="texto-ajuda">Campo opcional. Ajuda a preservar o detalhe do lucro além do Sim / Não / Aproximadamente.</p>
         </div>
 
         <div class="grade-2">
@@ -930,6 +983,12 @@
         </div>
 
         <div class="campo">
+          <label for="emp_plano_escrito_detalhe">Se já tem ou está elaborando um plano, descreva brevemente</label>
+          <textarea id="emp_plano_escrito_detalhe" name="emp_plano_escrito_detalhe" style="min-height:70px;" placeholder="Descreva o plano de forma resumida, se houver (opcional)."></textarea>
+          <p class="texto-ajuda">Campo opcional. Complementa a resposta do campo acima com texto livre.</p>
+        </div>
+
+        <div class="campo">
           <label for="emp_mudaria_hoje">Se pudesse mudar uma coisa no negócio hoje, o que seria<span class="obrig">*</span></label>
           <textarea id="emp_mudaria_hoje" name="emp_mudaria_hoje" required></textarea>
           <div class="msg-erro" id="err-emp_mudaria_hoje">Campo obrigatório.</div>
@@ -1038,6 +1097,12 @@
           </div>
 
           <div class="campo">
+            <label for="tur_produto_principal">Qual é o principal produto, serviço ou experiência turística que você oferece ou pretende oferecer<span class="obrig">*</span></label>
+            <textarea id="tur_produto_principal" name="tur_produto_principal" required style="min-height:70px;" placeholder="Ex.: Tour guiado pela comunidade de 2 horas com narrativa histórica e cultural"></textarea>
+            <div class="msg-erro" id="err-tur_produto_principal">Campo obrigatório.</div>
+          </div>
+
+          <div class="campo">
             <label for="tur_tempo">Há quanto tempo atua no setor de turismo comunitário</label>
             <select id="tur_tempo" name="tur_tempo">
               <option value="">Selecione</option>
@@ -1097,6 +1162,19 @@
                 <option value="Acima de R$ 50.000">Acima de R$ 50.000</option>
                 <option value="Prefere não informar">Prefere não informar</option>
               </select>
+            </div>
+            <div class="campo">
+              <label for="tur_preco_medio">Qual é o preço médio cobrado por visitante, cliente ou experiência<span class="obrig">*</span></label>
+              <select id="tur_preco_medio" name="tur_preco_medio" required>
+                <option value="">Selecione</option>
+                <option value="Gratuito">Gratuito</option>
+                <option value="Até R$ 50">Até R$ 50</option>
+                <option value="R$ 51 a R$ 100">R$ 51 a R$ 100</option>
+                <option value="R$ 101 a R$ 200">R$ 101 a R$ 200</option>
+                <option value="Acima de R$ 200">Acima de R$ 200</option>
+                <option value="Ainda não sei informar">Ainda não sei informar</option>
+              </select>
+              <div class="msg-erro" id="err-tur_preco_medio">Campo obrigatório.</div>
             </div>
           </div>
 
@@ -1296,6 +1374,15 @@
                 <label class="opcao-radio"><input type="radio" name="tur_marca_registrada" value="Não"><span>Não</span></label>
               </div>
             </div>
+            <div class="campo">
+              <label>Possui Cadastur ou algum registro formal ligado ao turismo<span class="obrig">*</span></label>
+              <div class="grupo-radio">
+                <label class="opcao-radio"><input type="radio" name="tur_cadastur" value="Sim" required><span>Sim</span></label>
+                <label class="opcao-radio"><input type="radio" name="tur_cadastur" value="Não"><span>Não</span></label>
+                <label class="opcao-radio"><input type="radio" name="tur_cadastur" value="Não sei informar"><span>Não sei informar</span></label>
+              </div>
+              <div class="msg-erro" id="err-tur_cadastur">Selecione uma opção.</div>
+            </div>
           </div>
 
           <div class="separador"></div>
@@ -1368,6 +1455,20 @@
           <div class="campo">
             <label for="tur_dificuldade_crescimento">O que mais dificulta o crescimento do seu negócio hoje</label>
             <textarea id="tur_dificuldade_crescimento" name="tur_dificuldade_crescimento"></textarea>
+          </div>
+
+          <div class="separador"></div>
+          <div class="subsecao-titulo">Interesse no Projeto</div>
+
+          <div class="campo">
+            <label>Você tem interesse em atuar como Agente de Turismo Territorial do projeto<span class="obrig">*</span></label>
+            <p class="texto-ajuda">Agentes de Turismo Territorial recebem bolsas de 3 meses para apoiar atividades, recepção de visitantes e articulação local.</p>
+            <div class="grupo-radio">
+              <label class="opcao-radio"><input type="radio" name="tur_interesse_agente" value="Sim" required><span>Sim</span></label>
+              <label class="opcao-radio"><input type="radio" name="tur_interesse_agente" value="Não"><span>Não</span></label>
+              <label class="opcao-radio"><input type="radio" name="tur_interesse_agente" value="Talvez / quero receber mais informações"><span>Talvez / quero receber mais informações</span></label>
+            </div>
+            <div class="msg-erro" id="err-tur_interesse_agente">Selecione uma opção.</div>
           </div>
 
         </div>
@@ -1653,6 +1754,7 @@
   // ============================================================
   var gruposCheckbox = [
     'emp_quais_redes', 'emp_temas_deseja',
+    'pessoa_idiomas',
     'tur_segmentos', 'tur_canais', 'tur_praticas',
     'tur_quais_redes', 'tur_tecnologias', 'tur_fontes_recursos',
     'tur_tipo_instituicao', 'tur_dificuldades', 'prioridade_encaminhamento'
@@ -1711,20 +1813,22 @@
       'contato_telefone',
       'endereco_tipo_logradouro', 'endereco_logradouro', 'endereco_numero',
       'endereco_bairro', 'endereco_municipio', 'endereco_uf', 'endereco_cep', 'endereco_tipo',
-      'negocio_ramo', 'negocio_formalizado', 'negocio_inicio_atividades', 'negocio_qtd_pessoas',
+      'negocio_ramo', 'negocio_formalizado', 'negocio_ocupacao', 'negocio_inicio_atividades', 'negocio_qtd_pessoas',
       'negocio_motivo', 'negocio_descricao',
       'emp_organiza_dinheiro', 'emp_separa_pessoal', 'emp_sabe_lucro', 'emp_preocupacao_financeira',
       'emp_quem_ajuda', 'emp_materiais', 'emp_tecnologia', 'emp_dificuldades',
       'emp_como_divulga', 'emp_onde_vende', 'emp_acompanha_vendas', 'emp_melhoria_clientes',
       'emp_objetivo', 'emp_meta_12_meses', 'emp_plano_escrito',
       'emp_mudaria_hoje', 'emp_dificuldade_atual', 'emp_com_apoio',
+      'tur_produto_principal', 'tur_preco_medio',
       'prioridade_gargalo_emp', 'prioridade_maturidade',
       'prioridade_30_dias', 'prioridade_60_dias', 'prioridade_90_dias'
     ];
 
     var radiosObrig = [
       'coleta_tipo', 'pessoa_morador', 'negocio_fonte_renda',
-      'emp_conta_bancaria', 'emp_credito_formal', 'emp_usa_redes', 'emp_fez_curso', 'tur_atua'
+      'emp_conta_bancaria', 'emp_credito_formal', 'emp_usa_redes', 'emp_fez_curso', 'tur_atua',
+      'tur_cadastur', 'tur_interesse_agente'
     ];
 
     camposObrig.forEach(function(id) {

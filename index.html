@@ -42,18 +42,7 @@
       text-align: center;
     }
     .cab-logos {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 32px;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
-    }
-    .cab-logos img {
-      height: 40px;
-      width: auto;
-      object-fit: contain;
-      opacity: 0.95;
+      display: none;
     }
     .cab-titulo {
       font-family: 'Montserrat', sans-serif;
@@ -310,13 +299,22 @@
     .btn-enviar:hover { background: #d4a903; transform: translateY(-1px); }
     .btn-enviar:disabled { background: #9ca3af; cursor: not-allowed; transform: none; }
     .rodape {
-      background: var(--azul-principal);
-      color: var(--branco);
+      background: var(--branco);
+      border-top: 1px solid var(--cinza-neutro);
       text-align: center;
-      padding: 24px;
-      font-size: 13px;
-      margin-top: 60px;
-      opacity: 0.9;
+      padding: 28px 24px 32px;
+      margin-top: 40px;
+    }
+    .rodape-regua {
+      display: block;
+      margin: 0 auto;
+      width: auto;
+      max-width: 160px;
+      height: auto;
+      opacity: 0.92;
+    }
+    @media (max-width: 480px) {
+      .rodape-regua { max-width: 120px; }
     }
     .separador {
       height: 1px;
@@ -336,10 +334,6 @@
     >
   </div>
   <div class="cab-inferior">
-    <div class="cab-logos">
-      <img src="assets/logo-instituto-br.png" alt="Instituto BR Arte" onerror="this.style.display='none'">
-      <img src="assets/logo-prefeitura-rio.png" alt="Prefeitura do Rio" onerror="this.style.display='none'">
-    </div>
     <h1 class="cab-titulo">Diagnóstico de Turismo Comunitário</h1>
     <p class="cab-subtitulo">Levantamento de informações para apoio técnico, fortalecimento de negócios locais e desenvolvimento territorial.</p>
   </div>
@@ -1547,8 +1541,12 @@
 </main>
 
 <footer class="rodape">
-  Formulário de uso exclusivo para pesquisa e orientação técnica. Dados tratados de forma confidencial.<br>
-  Prospera Turismo - Instituto BR Arte
+  <img
+    src="assets/regua-instituto-prefeitura.png"
+    alt="Instituto BR Arte e Prefeitura do Rio de Janeiro"
+    class="rodape-regua"
+    onerror="this.style.display='none'"
+  >
 </footer>
 
 <script>
@@ -1893,14 +1891,13 @@
 
     // Coletar radios
     var todosRadios = [
-  'coleta_tipo', 'pessoa_morador', 'negocio_fonte_renda',
-  'emp_conta_bancaria', 'emp_credito_formal', 'emp_usa_redes', 'emp_fez_curso',
-  'tur_atua', 'tur_conteudo_redes', 'tur_fez_capacitacao',
-  'tur_depende_editais', 'tur_conta_bancaria', 'tur_credito_formal',
-  'tur_marca_registrada', 'tur_cadastur', 'tur_atua_vulneraveis',
-  'tur_recebeu_apoio', 'tur_interesse_agente',
-  'tur_facilidade_tecnologia'
-];
+      'coleta_tipo', 'pessoa_morador', 'negocio_fonte_renda',
+      'emp_conta_bancaria', 'emp_credito_formal', 'emp_usa_redes', 'emp_fez_curso',
+      'tur_atua', 'tur_conteudo_redes', 'tur_fez_capacitacao',
+      'tur_depende_editais', 'tur_conta_bancaria', 'tur_credito_formal',
+      'tur_marca_registrada', 'tur_atua_vulneraveis', 'tur_recebeu_apoio',
+      'tur_facilidade_tecnologia'
+    ];
     todosRadios.forEach(function(nome) { coletarRadios(dados, nome); });
 
     // Coletar checkboxes

@@ -475,9 +475,12 @@
           <label for="pessoa_escolaridade">Escolaridade<span class="obrig">*</span></label>
           <select id="pessoa_escolaridade" name="pessoa_escolaridade" required onchange="mostrarEscolaridadeOutro(this.value)">
             <option value="">Selecione</option>
-            <option value="Ensino Fundamental">Ensino Fundamental</option>
-            <option value="Ensino Médio">Ensino Médio</option>
-            <option value="Ensino Superior">Ensino Superior</option>
+            <option value="Ensino Fundamental Completo">Ensino Fundamental Completo</option>
+            <option value="Ensino Fundamental Incompleto">Ensino Fundamental Incompleto</option>
+            <option value="Ensino Médio Completo">Ensino Médio Completo</option>
+            <option value="Ensino Médio Incompleto">Ensino Médio Incompleto</option>
+            <option value="Ensino Superior Completo">Ensino Superior Completo</option>
+             <option value="Ensino Superior Incompleto">Ensino Superior Incompleto</option>
             <option value="Pós-graduação">Pós-graduação</option>
             <option value="Outro">Outro</option>
           </select>
@@ -539,6 +542,7 @@
             <option value="2 a 5 anos">2 a 5 anos</option>
             <option value="6 a 10 anos">6 a 10 anos</option>
             <option value="Mais de 10 anos">Mais de 10 anos</option>
+            <option value="Desde de Sempre">Desde Sempre</option>
           </select>
           <div class="msg-erro" id="err-pessoa_tempo_territorio">Campo obrigatório.</div>
         </div>

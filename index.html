@@ -396,6 +396,7 @@
 
         <div class="campo">
           <label for="coleta_entrevistador">Nome do entrevistador(a)<span class="obrig">*</span></label>
+          <p class="texto-ajuda">Quem está conduzindo esta entrevista.</p>
           <input type="text" id="coleta_entrevistador" name="coleta_entrevistador" required>
           <div class="msg-erro" id="err-coleta_entrevistador">Campo obrigatório.</div>
         </div>
@@ -408,7 +409,8 @@
 
         <div class="campo">
           <label for="coleta_observacoes">Observações do entrevistador(a)<span class="obrig">*</span></label>
-          <textarea id="coleta_observacoes" name="coleta_observacoes" placeholder="Anotações relevantes sobre o contexto da coleta. Se não houver nada a registrar, escreva 'Sem observações'." required></textarea>
+          <p class="texto-ajuda">Registre o contexto da coleta: local, tom da conversa, situação especial, se a pessoa ficou à vontade. Se não houver nada relevante, escreva "Sem observações".</p>
+          <textarea id="coleta_observacoes" name="coleta_observacoes" placeholder="Ex.: Atendimento realizado na frente da casa. Empreendedora ficou à vontade. Sem observações adicionais." required></textarea>
           <div class="msg-erro" id="err-coleta_observacoes">Campo obrigatório.</div>
         </div>
 
@@ -424,6 +426,7 @@
 
         <div class="campo">
           <label for="pessoa_nome_iniciativa">Nome do empreendimento ou iniciativa<span class="obrig">*</span></label>
+          <p class="texto-ajuda">Como o negócio é chamado ou como a pessoa o apresenta. Pode ser um nome informal.</p>
           <input type="text" id="pessoa_nome_iniciativa" name="pessoa_nome_iniciativa" required>
           <div class="msg-erro" id="err-pessoa_nome_iniciativa">Campo obrigatório.</div>
         </div>
@@ -439,11 +442,8 @@
             <label for="pessoa_genero">Como se identifica em termos de gênero<span class="obrig">*</span></label>
             <select id="pessoa_genero" name="pessoa_genero" required onchange="mostrarOutroGenero(this.value)">
               <option value="">Selecione</option>
-              <option value="Mulher Cis"> Mulher Cis</option>
-               <option value="Homem Cis"> Homem Cis</option>
-              <option value="Mulher Trans">Mulher Trans</option>
-              <option value="Homem Trans">Homem Trans</option>
-              <option value="Travesti">Travesti</option>
+              <option value="Cisgênero">Cisgênero</option>
+              <option value="Transgênero">Transgênero</option>
               <option value="Não binário">Não binário</option>
               <option value="Prefere não responder">Prefere não responder</option>
               <option value="Outro">Outro</option>
@@ -475,12 +475,9 @@
           <label for="pessoa_escolaridade">Escolaridade<span class="obrig">*</span></label>
           <select id="pessoa_escolaridade" name="pessoa_escolaridade" required onchange="mostrarEscolaridadeOutro(this.value)">
             <option value="">Selecione</option>
-            <option value="Ensino Fundamental Completo">Ensino Fundamental Completo</option>
-            <option value="Ensino Fundamental Incompleto">Ensino Fundamental Incompleto</option>
-            <option value="Ensino Médio Completo">Ensino Médio Completo</option>
-            <option value="Ensino Médio Incompleto">Ensino Médio Incompleto</option>
-            <option value="Ensino Superior Completo">Ensino Superior Completo</option>
-             <option value="Ensino Superior Incompleto">Ensino Superior Incompleto</option>
+            <option value="Ensino Fundamental">Ensino Fundamental</option>
+            <option value="Ensino Médio">Ensino Médio</option>
+            <option value="Ensino Superior">Ensino Superior</option>
             <option value="Pós-graduação">Pós-graduação</option>
             <option value="Outro">Outro</option>
           </select>
@@ -498,7 +495,6 @@
             <label for="pessoa_cor_raca">Cor ou raça<span class="obrig">*</span></label>
             <select id="pessoa_cor_raca" name="pessoa_cor_raca" required onchange="mostrarOutraRaca(this.value)">
               <option value="">Selecione</option>
-              <option value="Amarela">Amarela</option>
               <option value="Branca">Branca</option>
               <option value="Parda">Parda</option>
               <option value="Preta">Preta</option>
@@ -536,13 +532,13 @@
 
         <div class="campo">
           <label for="pessoa_tempo_territorio">Há quanto tempo mora ou atua nesta comunidade<span class="obrig">*</span></label>
+          <p class="texto-ajuda">Considere o tempo de vínculo com a comunidade, mesmo que seja por trabalho ou frequência habitual.</p>
           <select id="pessoa_tempo_territorio" name="pessoa_tempo_territorio" required>
             <option value="">Selecione</option>
             <option value="Menos de 2 anos">Menos de 2 anos</option>
             <option value="2 a 5 anos">2 a 5 anos</option>
             <option value="6 a 10 anos">6 a 10 anos</option>
             <option value="Mais de 10 anos">Mais de 10 anos</option>
-            <option value="Desde de Sempre">Desde Sempre</option>
           </select>
           <div class="msg-erro" id="err-pessoa_tempo_territorio">Campo obrigatório.</div>
         </div>
@@ -580,6 +576,7 @@
         </div>
         <div class="campo">
           <label for="socio_beneficio">Você ou alguém do domicílio está inscrito no CadÚnico ou recebe algum benefício social<span class="obrig">*</span></label>
+          <p class="texto-ajuda">Informe apenas a categoria geral. Não é necessário mostrar documentos ou informar valores. Caso a pessoa prefira não responder, escolha "Prefere não responder".</p>
           <select id="socio_beneficio" name="socio_beneficio" required>
             <option value="">Selecione</option>
             <option value="Prefere não informar / Não se aplica">Prefere não informar / Não se aplica</option>
@@ -757,6 +754,7 @@
         <div class="grade-2">
           <div class="campo">
             <label for="negocio_formalizado">O negócio é formalizado<span class="obrig">*</span></label>
+            <p class="texto-ajuda">Pergunte se o negócio já tem registro formal, como MEI, CNPJ, associação ou cooperativa. Se a pessoa trabalha por conta própria sem CNPJ, marque informal.</p>
             <select id="negocio_formalizado" name="negocio_formalizado" required onchange="mostrarDocumento(this.value); mostrarFormalizadoOutro(this.value);">
               <option value="">Selecione</option>
               <option value="Não, informal/autônomo(a)">Não, informal / autônomo(a)</option>
@@ -769,6 +767,7 @@
           </div>
           <div class="campo">
             <label for="negocio_inicio_atividades">Data de início das atividades<span class="obrig">*</span></label>
+            <p class="texto-ajuda">Quando o negócio começou a funcionar, mesmo que sem registro formal?</p>
             <input type="date" id="negocio_inicio_atividades" name="negocio_inicio_atividades" required>
             <div class="msg-erro" id="err-negocio_inicio_atividades">Campo obrigatório.</div>
           </div>
@@ -782,6 +781,7 @@
 
         <div class="campo">
           <label for="negocio_ocupacao">Ocupação<span class="obrig">*</span></label>
+          <p class="texto-ajuda">Código SEBRAE da ocupação da pessoa. Use a lista abaixo para identificar o mais adequado.</p>
           <select id="negocio_ocupacao" name="negocio_ocupacao" required>
             <option value="">Selecione</option>
             <option value="1000 - Não possui">1000 - Não possui</option>
@@ -792,22 +792,24 @@
           <div class="msg-erro" id="err-negocio_ocupacao">Campo obrigatório.</div>
         </div>
 
-        <div class="grade-2">
-          <div class="campo bloco-condicional" id="bloco-negocio_cpf">
-            <label for="negocio_cpf">CPF do responsável pelo negócio<span class="obrig">*</span></label>
-            <input type="text" id="negocio_cpf" name="negocio_cpf" placeholder="000.000.000-00" maxlength="14">
-            <div class="msg-erro" id="err-negocio_cpf">Informe o CPF do responsável pelo negócio.</div>
-          </div>
-          <div class="campo bloco-condicional" id="bloco-negocio_cnpj">
-            <label for="negocio_cnpj">CNPJ do negócio<span class="obrig">*</span></label>
-            <input type="text" id="negocio_cnpj" name="negocio_cnpj" placeholder="00.000.000/0000-00" maxlength="18">
-            <div class="msg-erro" id="err-negocio_cnpj">Informe o CNPJ do negócio formalizado.</div>
-          </div>
+        <div class="campo bloco-condicional" id="bloco-negocio_cpf">
+          <label for="negocio_cpf">CPF do responsável pelo negócio<span class="obrig">*</span></label>
+          <p class="texto-ajuda">Informe o CPF da pessoa responsável pelo negócio ou iniciativa.</p>
+          <input type="text" id="negocio_cpf" name="negocio_cpf" placeholder="000.000.000-00" maxlength="14">
+          <div class="msg-erro" id="err-negocio_cpf">Informe o CPF do responsável.</div>
+        </div>
+
+        <div class="campo bloco-condicional" id="bloco-negocio_cnpj">
+          <label for="negocio_cnpj">CNPJ do negócio formalizado<span class="obrig">*</span></label>
+          <p class="texto-ajuda">Informe o CNPJ quando o negócio for MEI, empresa, associação, cooperativa ou outro tipo formalizado.</p>
+          <input type="text" id="negocio_cnpj" name="negocio_cnpj" placeholder="00.000.000/0000-00" maxlength="18">
+          <div class="msg-erro" id="err-negocio_cnpj">Informe o CNPJ do negócio formalizado.</div>
         </div>
 
         <div class="grade-2">
           <div class="campo">
             <label for="negocio_qtd_pessoas">Quantas pessoas trabalham no negócio (incluindo você)<span class="obrig">*</span></label>
+            <p class="texto-ajuda">Conte todos que ajudam, mesmo que não recebam salário fixo, como familiares ou parceiros.</p>
             <input type="number" id="negocio_qtd_pessoas" name="negocio_qtd_pessoas" min="1" required>
             <div class="msg-erro" id="err-negocio_qtd_pessoas">Informe a quantidade.</div>
           </div>
@@ -840,13 +842,15 @@
 
         <div class="campo">
           <label for="negocio_motivo">Por que você decidiu abrir este negócio<span class="obrig">*</span></label>
-          <textarea id="negocio_motivo" name="negocio_motivo" required></textarea>
+          <p class="texto-ajuda">Registre com as palavras da própria pessoa. Pode ser necessidade financeira, realização pessoal, herança de família, oportunidade de mercado, paixão pela área, etc.</p>
+          <textarea id="negocio_motivo" name="negocio_motivo" placeholder="Ex.: Precisei de uma renda extra e sempre gostei de cozinhar. Comecei vendendo marmita para os vizinhos." required></textarea>
           <div class="msg-erro" id="err-negocio_motivo">Campo obrigatório.</div>
         </div>
 
         <div class="campo">
           <label for="negocio_descricao">Descreva o negócio em poucas palavras<span class="obrig">*</span></label>
-          <textarea id="negocio_descricao" name="negocio_descricao" required></textarea>
+          <p class="texto-ajuda">O que o negócio faz, vende ou oferece? Use a linguagem da pessoa, sem formalizar demais.</p>
+          <textarea id="negocio_descricao" name="negocio_descricao" placeholder="Ex.: Faço unhas e sobrancelha em casa, atendo pelo WhatsApp, de segunda a sábado." required></textarea>
           <div class="msg-erro" id="err-negocio_descricao">Campo obrigatório.</div>
         </div>
 
@@ -864,6 +868,7 @@
 
         <div class="campo">
           <label for="emp_organiza_dinheiro">Como você organiza o dinheiro que entra e sai do negócio<span class="obrig">*</span></label>
+          <p class="texto-ajuda">A pessoa usa caderno, planilha, aplicativo? Ou não controla nada? Anote como ela realmente faz.</p>
           <textarea id="emp_organiza_dinheiro" name="emp_organiza_dinheiro" required></textarea>
           <div class="msg-erro" id="err-emp_organiza_dinheiro">Campo obrigatório.</div>
         </div>
@@ -930,6 +935,7 @@
 
         <div class="campo">
           <label for="emp_preocupacao_financeira">O que mais te preocupa em relação ao dinheiro do negócio<span class="obrig">*</span></label>
+          <p class="texto-ajuda">Pergunte: o que mais preocupa você quando pensa no dinheiro do negócio? Pode ser dívida, capital de giro, preço, faturamento ou qualquer coisa.</p>
           <textarea id="emp_preocupacao_financeira" name="emp_preocupacao_financeira" required></textarea>
           <div class="msg-erro" id="err-emp_preocupacao_financeira">Campo obrigatório.</div>
         </div>
@@ -957,6 +963,7 @@
 
         <div class="campo">
           <label for="emp_dificuldades">Existe algo que dificulta o trabalho no dia a dia? Qual?<span class="obrig">*</span></label>
+          <p class="texto-ajuda">Pergunte qual problema mais atrapalha o funcionamento do negócio hoje. Pode ser cliente, estoque, tempo, local ou outra dificuldade.</p>
           <textarea id="emp_dificuldades" name="emp_dificuldades" required></textarea>
           <div class="msg-erro" id="err-emp_dificuldades">Campo obrigatório.</div>
         </div>
@@ -1025,7 +1032,8 @@
 
         <div class="campo">
           <label for="emp_melhoria_clientes">O que você acha que poderia melhorar para atrair mais clientes<span class="obrig">*</span></label>
-          <textarea id="emp_melhoria_clientes" name="emp_melhoria_clientes" required></textarea>
+          <p class="texto-ajuda">Explique para a pessoa: pense no que faria mais gente conhecer, confiar ou comprar de você. Pode ser divulgação, preço, atendimento, aparência do produto, redes sociais ou ponto de venda.</p>
+          <textarea id="emp_melhoria_clientes" name="emp_melhoria_clientes" placeholder="Ex.: melhorar o Instagram, criar promoção, organizar fotos dos produtos, divulgar no WhatsApp, melhorar atendimento." required></textarea>
           <div class="msg-erro" id="err-emp_melhoria_clientes">Campo obrigatório.</div>
         </div>
 
@@ -1034,12 +1042,14 @@
 
         <div class="campo">
           <label for="emp_objetivo">Qual é o objetivo do negócio<span class="obrig">*</span></label>
+          <p class="texto-ajuda">O que a pessoa quer com esse negócio no geral? Sustento, crescimento, reconhecimento, formalização, expansão?</p>
           <textarea id="emp_objetivo" name="emp_objetivo" required></textarea>
           <div class="msg-erro" id="err-emp_objetivo">Campo obrigatório.</div>
         </div>
 
         <div class="campo">
           <label for="emp_meta_12_meses">O que você quer conquistar com o negócio nos próximos 12 meses<span class="obrig">*</span></label>
+          <p class="texto-ajuda">Uma meta concreta e possível. Ex.: formalizar o MEI, conseguir mais clientes, montar um espaço próprio, dobrar as vendas.</p>
           <textarea id="emp_meta_12_meses" name="emp_meta_12_meses" required></textarea>
           <div class="msg-erro" id="err-emp_meta_12_meses">Campo obrigatório.</div>
         </div>
@@ -1063,18 +1073,21 @@
 
         <div class="campo">
           <label for="emp_mudaria_hoje">Se pudesse mudar uma coisa no negócio hoje, o que seria<span class="obrig">*</span></label>
+          <p class="texto-ajuda">Se a pessoa ficar em dúvida, pergunte: "O que mais te incomoda agora no negócio?"</p>
           <textarea id="emp_mudaria_hoje" name="emp_mudaria_hoje" required></textarea>
           <div class="msg-erro" id="err-emp_mudaria_hoje">Campo obrigatório.</div>
         </div>
 
         <div class="campo">
           <label for="emp_dificuldade_atual">O que é mais difícil no negócio hoje<span class="obrig">*</span></label>
+          <p class="texto-ajuda">Pergunte qual barreira concreta impede o negócio de crescer neste momento.</p>
           <textarea id="emp_dificuldade_atual" name="emp_dificuldade_atual" required></textarea>
           <div class="msg-erro" id="err-emp_dificuldade_atual">Campo obrigatório.</div>
         </div>
 
         <div class="campo">
           <label for="emp_com_apoio">O que você faria no futuro para melhorar o negócio, se tivesse apoio<span class="obrig">*</span></label>
+          <p class="texto-ajuda">Estimule a pessoa a pensar livremente. Se tivesse dinheiro ou orientação, o que mudaria?</p>
           <textarea id="emp_com_apoio" name="emp_com_apoio" required></textarea>
           <div class="msg-erro" id="err-emp_com_apoio">Campo obrigatório.</div>
         </div>
@@ -1181,6 +1194,7 @@
 
           <div class="campo">
             <label for="tur_produto_principal">Qual é o principal produto, serviço ou experiência turística que você oferece ou pretende oferecer<span class="obrig">*</span></label>
+          <p class="texto-ajuda">Turismo comunitário é quando a própria comunidade cria experiências, serviços ou produtos ligados à cultura, história, gastronomia, memória, território ou visitação. Peça para a pessoa descrever com as próprias palavras.</p>
             <textarea id="tur_produto_principal" name="tur_produto_principal" required style="min-height:70px;" placeholder="Ex.: Tour guiado pela comunidade de 2 horas com narrativa histórica e cultural"></textarea>
             <div class="msg-erro" id="err-tur_produto_principal">Campo obrigatório.</div>
           </div>
@@ -1602,13 +1616,15 @@
 
           <div class="campo">
             <label for="tur_medidas_poder_publico">Quais seriam as principais medidas que o poder público ou parceiros poderiam tomar para impulsionar o turismo comunitário na sua comunidade<span class="obrig">*</span></label>
+          <p class="texto-ajuda">Deixe a pessoa falar livremente. Pode ser segurança, apoio financeiro, divulgação, capacitação, parceria com hotéis, agências, plataformas, etc.</p>
             <textarea id="tur_medidas_poder_publico" name="tur_medidas_poder_publico" placeholder="Liste até 3 medidas" required></textarea>
             <div class="msg-erro" id="err-tur_medidas_poder_publico">Campo obrigatório.</div>
           </div>
 
           <div class="campo">
             <label for="tur_dificuldade_crescimento">O que mais dificulta o crescimento do seu negócio hoje<span class="obrig">*</span></label>
-            <textarea id="tur_dificuldade_crescimento" name="tur_dificuldade_crescimento" required></textarea>
+            <p class="texto-ajuda">Pergunte qual barreira concreta impede o negócio de crescer neste momento.</p>
+            <textarea id="tur_dificuldade_crescimento" name="tur_dificuldade_crescimento" placeholder="Ex.: falta de divulgação fora da comunidade, dificuldade de acesso de visitantes por insegurança, sem capital para investir." required></textarea>
             <div class="msg-erro" id="err-tur_dificuldade_crescimento">Campo obrigatório.</div>
           </div>
 
@@ -1639,13 +1655,15 @@
 
         <div class="campo">
           <label for="prioridade_gargalo_emp">Principal gargalo empresarial identificado<span class="obrig">*</span></label>
-          <textarea id="prioridade_gargalo_emp" name="prioridade_gargalo_emp" required></textarea>
+          <p class="texto-ajuda">Anote o maior obstáculo empresarial identificado durante o diagnóstico. Use a perspectiva técnica do entrevistador.</p>
+          <textarea id="prioridade_gargalo_emp" name="prioridade_gargalo_emp" placeholder="Ex.: falta de controle financeiro, ausência de divulgação estruturada, preço mal calculado, estoque desorganizado." required></textarea>
           <div class="msg-erro" id="err-prioridade_gargalo_emp">Campo obrigatório.</div>
         </div>
 
         <div class="campo">
           <label for="prioridade_gargalo_tur">Principal gargalo turístico identificado<span class="obrig">*</span></label>
-          <textarea id="prioridade_gargalo_tur" name="prioridade_gargalo_tur" required placeholder="Escreva 'Não se aplica' se a pessoa não atua com turismo comunitário."></textarea>
+          <p class="texto-ajuda">Se a pessoa não atua com turismo, escreva "Não se aplica". Caso contrário, descreva o maior obstáculo no campo turístico.</p>
+          <textarea id="prioridade_gargalo_tur" name="prioridade_gargalo_tur" placeholder="Ex.: não se aplica. Ou: dificuldade de captar visitantes, falta de produto estruturado, ausência de divulgação em plataformas." required></textarea>
           <div class="msg-erro" id="err-prioridade_gargalo_tur">Campo obrigatório.</div>
         </div>
 
@@ -1663,19 +1681,22 @@
 
         <div class="campo">
           <label for="prioridade_30_dias">Prioridade recomendada para os próximos 30 dias<span class="obrig">*</span></label>
-          <textarea id="prioridade_30_dias" name="prioridade_30_dias" required></textarea>
+          <p class="texto-ajuda">Transforme a resposta em uma ação simples e possível de fazer nos próximos dias. Deve ser algo concreto.</p>
+          <textarea id="prioridade_30_dias" name="prioridade_30_dias" placeholder="Ex.: organizar preços, atualizar redes sociais e criar lista de clientes no WhatsApp." required></textarea>
           <div class="msg-erro" id="err-prioridade_30_dias">Campo obrigatório.</div>
         </div>
 
         <div class="campo">
           <label for="prioridade_60_dias">Prioridade recomendada para 60 dias<span class="obrig">*</span></label>
-          <textarea id="prioridade_60_dias" name="prioridade_60_dias" required></textarea>
+          <p class="texto-ajuda">O que deve acontecer no segundo mês? Uma evolução em relação aos 30 dias anteriores.</p>
+          <textarea id="prioridade_60_dias" name="prioridade_60_dias" placeholder="Ex.: testar uma nova oferta, acompanhar vendas e melhorar o atendimento." required></textarea>
           <div class="msg-erro" id="err-prioridade_60_dias">Campo obrigatório.</div>
         </div>
 
         <div class="campo">
           <label for="prioridade_90_dias">Prioridade recomendada para 90 dias<span class="obrig">*</span></label>
-          <textarea id="prioridade_90_dias" name="prioridade_90_dias" required></textarea>
+          <p class="texto-ajuda">O que deve estar consolidado ao final de 3 meses? Pense em algo mais estruturante para o negócio.</p>
+          <textarea id="prioridade_90_dias" name="prioridade_90_dias" placeholder="Ex.: formalizar o negócio, buscar parceria e estruturar uma rotina de divulgação." required></textarea>
           <div class="msg-erro" id="err-prioridade_90_dias">Campo obrigatório.</div>
         </div>
 
@@ -1703,6 +1724,7 @@
 
         <div class="campo">
           <label for="coleta_termino">Horário de término do preenchimento<span class="obrig">*</span></label>
+          <p class="texto-ajuda">Registre o horário em que o formulário foi concluído. Se deixar em branco, será preenchido automaticamente ao enviar.</p>
           <input type="time" id="coleta_termino" name="coleta_termino" required>
           <div class="msg-erro" id="err-coleta_termino">Campo obrigatório.</div>
           <p class="texto-ajuda">Preenchido automaticamente no envio, se deixado em branco.</p>
@@ -1837,7 +1859,7 @@
     var errCNPJ   = document.getElementById('err-negocio_cnpj');
 
     if (val === 'Não, informal/autônomo(a)') {
-      // Negocio informal: CPF obrigatorio e visivel, CNPJ oculto/limpo/nao obrigatorio
+      // Informal: CPF obrigatorio, CNPJ oculto e limpo
       blocoCPF.classList.add('visivel');
       campoCPF.setAttribute('required', 'required');
       campoCPF.classList.remove('erro');
@@ -1849,20 +1871,18 @@
       campoCNPJ.classList.remove('erro');
       if (errCNPJ) errCNPJ.classList.remove('visivel');
     } else if (val !== '') {
-      // Negocio formalizado (MEI / ME-EIRELI / Associacao-Cooperativa / outro tipo):
-      // CNPJ obrigatorio e visivel, CPF oculto/limpo/nao obrigatorio
+      // Formalizado (MEI / ME-EIRELI / Associacao / outro): CPF + CNPJ, ambos obrigatorios
+      blocoCPF.classList.add('visivel');
+      campoCPF.setAttribute('required', 'required');
+      campoCPF.classList.remove('erro');
+      if (errCPF) errCPF.classList.remove('visivel');
+
       blocoCNPJ.classList.add('visivel');
       campoCNPJ.setAttribute('required', 'required');
       campoCNPJ.classList.remove('erro');
       if (errCNPJ) errCNPJ.classList.remove('visivel');
-
-      blocoCPF.classList.remove('visivel');
-      campoCPF.removeAttribute('required');
-      campoCPF.value = '';
-      campoCPF.classList.remove('erro');
-      if (errCPF) errCPF.classList.remove('visivel');
     } else {
-      // Nenhuma opcao selecionada: ocultar e limpar os dois, nenhum obrigatorio
+      // Vazio: ocultar e limpar os dois
       blocoCPF.classList.remove('visivel');
       blocoCNPJ.classList.remove('visivel');
       campoCPF.removeAttribute('required');
@@ -2167,15 +2187,16 @@
       }
     });
 
-    // Validacao condicional de CPF / CNPJ, de acordo com negocio_formalizado.
-    // Nunca exige os dois ao mesmo tempo.
+    // Validacao condicional de CPF / CNPJ conforme negocio_formalizado.
+    // Informal: apenas CPF. Formalizado: CPF e CNPJ, ambos obrigatorios.
     var formalizado = document.getElementById('negocio_formalizado').value;
     var campoCPF  = document.getElementById('negocio_cpf');
     var campoCNPJ = document.getElementById('negocio_cnpj');
     var errCPF    = document.getElementById('err-negocio_cpf');
     var errCNPJ   = document.getElementById('err-negocio_cnpj');
 
-    if (formalizado === 'Não, informal/autônomo(a)') {
+    if (formalizado !== '') {
+      // CPF sempre exigido quando ha opcao selecionada
       var valCPF = campoCPF.value ? campoCPF.value.trim() : '';
       if (!valCPF) {
         campoCPF.classList.add('erro');
@@ -2186,22 +2207,25 @@
         campoCPF.classList.remove('erro');
         if (errCPF) errCPF.classList.remove('visivel');
       }
-      if (errCNPJ) errCNPJ.classList.remove('visivel');
-    } else if (formalizado !== '') {
-      var valCNPJ = campoCNPJ.value ? campoCNPJ.value.trim() : '';
-      if (!valCNPJ) {
-        campoCNPJ.classList.add('erro');
-        if (errCNPJ) errCNPJ.classList.add('visivel');
-        valido = false;
-        if (!primeiroCampoErro) primeiroCampoErro = campoCNPJ;
+
+      // CNPJ exigido somente para negocio formalizado
+      if (formalizado !== 'Não, informal/autônomo(a)') {
+        var valCNPJ = campoCNPJ.value ? campoCNPJ.value.trim() : '';
+        if (!valCNPJ) {
+          campoCNPJ.classList.add('erro');
+          if (errCNPJ) errCNPJ.classList.add('visivel');
+          valido = false;
+          if (!primeiroCampoErro) primeiroCampoErro = campoCNPJ;
+        } else {
+          campoCNPJ.classList.remove('erro');
+          if (errCNPJ) errCNPJ.classList.remove('visivel');
+        }
       } else {
-        campoCNPJ.classList.remove('erro');
         if (errCNPJ) errCNPJ.classList.remove('visivel');
       }
-      if (errCPF) errCPF.classList.remove('visivel');
     }
     // Se negocio_formalizado estiver vazio, o proprio campo ja e cobrado
-    // como obrigatorio em camposObrig; CPF/CNPJ ficam ocultos e nao sao exigidos.
+    // em camposObrig; CPF e CNPJ ficam ocultos e nao sao exigidos.
 
     if (!valido && primeiroCampoErro) {
       primeiroCampoErro.scrollIntoView({ behavior: 'smooth', block: 'center' });

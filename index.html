@@ -442,8 +442,11 @@
             <label for="pessoa_genero">Como se identifica em termos de gênero<span class="obrig">*</span></label>
             <select id="pessoa_genero" name="pessoa_genero" required onchange="mostrarOutroGenero(this.value)">
               <option value="">Selecione</option>
-              <option value="Cisgênero">Cisgênero</option>
-              <option value="Transgênero">Transgênero</option>
+              <option value="Mulher Cis"> Mulher Cis</option>
+               <option value="Homem Cis"> Homem Cis</option>
+              <option value="Mulher Trans">Mulher Trans</option>
+              <option value="Homem Trans">Homem Trans</option>
+              <option value="Travesti">Travesti</option>
               <option value="Não binário">Não binário</option>
               <option value="Prefere não responder">Prefere não responder</option>
               <option value="Outro">Outro</option>
@@ -475,9 +478,12 @@
           <label for="pessoa_escolaridade">Escolaridade<span class="obrig">*</span></label>
           <select id="pessoa_escolaridade" name="pessoa_escolaridade" required onchange="mostrarEscolaridadeOutro(this.value)">
             <option value="">Selecione</option>
-            <option value="Ensino Fundamental">Ensino Fundamental</option>
-            <option value="Ensino Médio">Ensino Médio</option>
-            <option value="Ensino Superior">Ensino Superior</option>
+            <option value="Ensino Fundamental Completo">Ensino Fundamental Completo</option>
+            <option value="Ensino Fundamental Incompleto">Ensino Fundamental Incompleto</option>
+            <option value="Ensino Médio Completo">Ensino Médio Completo</option>
+            <option value="Ensino Médio Incompleto">Ensino Médio Incompleto</option>
+            <option value="Ensino Superior Completo">Ensino Superior Completo</option>
+             <option value="Ensino Superior Incompleto">Ensino Superior Incompleto</option>
             <option value="Pós-graduação">Pós-graduação</option>
             <option value="Outro">Outro</option>
           </select>
@@ -495,6 +501,7 @@
             <label for="pessoa_cor_raca">Cor ou raça<span class="obrig">*</span></label>
             <select id="pessoa_cor_raca" name="pessoa_cor_raca" required onchange="mostrarOutraRaca(this.value)">
               <option value="">Selecione</option>
+              <option value="Branca">Amarela</option>
               <option value="Branca">Branca</option>
               <option value="Parda">Parda</option>
               <option value="Preta">Preta</option>
